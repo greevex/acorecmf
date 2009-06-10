@@ -35,7 +35,7 @@ class Core {
 	}
 
 	public static function GetModule($mod){
-		if (!isset(self::$modules[strtolower($mod)])) require(ROOT . "/modules/"."{$mod}.php");
+		if (!isset(self::$modules[strtolower($mod)])) require(ROOT . "/modules/"."{$mod}/{$mod}.php");
 		return self::$modules[strtolower($mod)];
 	}
 
