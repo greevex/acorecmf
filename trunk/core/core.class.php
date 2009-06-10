@@ -102,7 +102,7 @@ class Core {
 		$res = "array(\n";
 		foreach ($array as $i => $v)
 		$res .= $pref .  (!is_numeric($i) ? "'" . str_replace("'", "\\'", $i) . "' => " : "") .
-		(is_array($v) ? self::encode($v, $pref . "\t") : (is_numeric($v) ? $v : (is_bool($v) ? ($v ? 'true' : 'false') : "'" . str_replace("\n", "\\n", str_replace("'", "\\'", $v)) . "'"))) . ",\n";
+		(is_array($v) ? self::encode($v, $pref . "\t") : (is_numeric($v) ? $v : (is_bool($v) ? ($v ? 'true' : 'false') : "'" . str_replace("'", "\\'", $v)) . "'")) . ",\n";
 		return $res . substr($pref, 0, -1) . ")";
 	}
 	public static function decode($string){
