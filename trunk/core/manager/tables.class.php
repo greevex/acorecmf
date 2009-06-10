@@ -35,7 +35,7 @@ class Tables extends AModule {
 	//Функции для работы с кэш файлами
 
 	public function cacheSave($name, $array){
-		$content = json_encode($array);
+		$content = Core::encode($array);
 		$file = ROOT . "/core/cache/tables/" . md5($_SESSION['manager_name'] . $name);
 		file_put_contents($file, $content);
 		unset($content);
@@ -45,7 +45,7 @@ class Tables extends AModule {
 		$file = ROOT . "/core/cache/tables/" . md5($_SESSION['manager_name'] . $name);
 		if (!file_exists($file)) return false;
 		if (!$data = file_get_contents($file)) return false;
-		return json_decode($data, true);
+		return Core::decode($data, true);
 	}
 	
 }

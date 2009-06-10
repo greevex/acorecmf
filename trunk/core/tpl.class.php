@@ -125,7 +125,7 @@ class Tpl {
 
 	private static function LoadCache(){
 		if (is_file(ROOT . "/core/cache/" . md5(self::$cache))){
-			self::$cacheTable = json_decode(file_get_contents(ROOT . "/core/cache/" . md5(self::$cache)), true);
+			self::$cacheTable = Core::decode(file_get_contents(ROOT . "/core/cache/" . md5(self::$cache)), true);
 			$pages = array_keys(self::$cacheTable);
 			for ($i = 0 ; $i < count($pages) ; $i++){
 				$cache = &self::$cacheTable[$pages[$i]];
@@ -142,7 +142,7 @@ class Tpl {
 
 	public static function SaveCached(){
 		if (self::$cacheUpdated){
-			file_put_contents(ROOT . "/core/cache/" . md5(self::$cache), json_encode(self::$cacheTable));
+			file_put_contents(ROOT . "/core/cache/" . md5(self::$cache), Core::encode(self::$cacheTable));
 		}
 	}
 
