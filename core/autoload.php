@@ -24,14 +24,18 @@ function __autoload($classname) {
 	$class = preg_replace("/([a-z])([A-Z])/u", "$1/$2", $classname);
 	$class = strtolower($class);
 	$classname = strtolower($classname);
-	if 		 (is_file("{$root}{$class}/{$class}.php")) {
-		require_once ("{$root}{$class}/{$class}.php");
+	//if (is_file("{$root}{$class}/{$class}.php")) {
+	//	require_once ("{$root}{$class}/{$class}.php");
+	if (is_file(ROOT . "/core/{$class}.class.php")){
+		require (ROOT . "/core/{$class}.class.php");
+	} else if (is_file(ROOT . "/core/{$classname}.class.php")){
+		require (ROOT . "/core/{$classname}.class.php");
 	} elseif (is_file("{$root}{$classname}/{$classname}.php")) {
-		require_once ("{$root}{$classname}/{$classname}.php");
+		require ("{$root}{$classname}/{$classname}.php");
 	} elseif (is_file("{$core}abstract/{$class}.class.php")) {
-		require_once ("{$core}abstract/{$class}.class.php");
+		require ("{$core}abstract/{$class}.class.php");
 	} elseif (is_file("{$core}abstract/{$classname}.class.php")) {
-		require_once ("{$core}abstract/{$classname}.class.php");
+		require ("{$core}abstract/{$classname}.class.php");
 	} else {
 		die("Невозможно найти модуль `{$classname}`!");
 	}
