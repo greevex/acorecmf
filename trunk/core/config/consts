@@ -1,9 +1,9 @@
 array(
 	'title' => 'ACore CMF',
-	'root' => 'http://acore',
-	'rand' => 400604248,
 	'test' => array(
 		'ru' => 'Тестовая константа',
 		'en' => 'Test const',
 	),
+	'root' => 'http://acore',
+	'rand' => 468780518,
 )
