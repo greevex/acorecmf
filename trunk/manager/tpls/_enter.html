@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Панель менеджера</title>
+		
+		<link href="<{root}>/manager/css/reset.css" rel="stylesheet">
+		<link href="<{root}>/manager/css/enter.css" rel="stylesheet">
+		
+		<script language="javascript" src="<{root}>/manager/javascript/mootools.js"></script>
+		<script language="javascript" src="<{root}>/manager/javascript/tools.js"></script>
+		<script language="javascript" src="<{root}>/manager/javascript/enter.js"></script>
+		<script language="javascript">
+			ROOT = '<{root}>';
+			DESIGN = '';
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="b_star l t"></div>
+			<div class="b_star r t"></div>
+			<div class="b_star l b"></div>
+			<div class="b_star r b"></div>
+			<b>Доступ запрещен!</b>
+			<form id="enter_form" onsubmit="return false;" method="post">
+				Логин:<br />
+				<div class="input"><input type="text" name="login" notnull="Введите логин!" value="" /></div>
+				Пароль:<br />
+				<div class="input"><input type="password" name="pass" notnull="Введите пароль!" value="" /></div>
+				<br />
+				<div class="button"><input type="submit" value="войти" /></div>
+				<div class="button"><input type="button" id="repass" value="забыли пароль?" /></div>
+			</form>
+			<ins class="site"><a href="<{root}>">на сайт</a></ins>
+			<ins>разработано в <a href="http://www.alarta.ru/">AlArta Studio</a></ins>
+		</div>
+	</body>
+</html>

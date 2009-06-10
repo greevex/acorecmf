@@ -1,0 +1,312 @@
+
+* {
+	font-size: 12px;
+	font-family: Verdana;
+	color: #333;
+}
+
+html, body {
+	background: #f0f0f0;
+	overflow: hidden;
+}
+
+/*  */
+
+div.alert {
+ 	position: absolute;
+ 	left: 50%;
+ 	top: 50%;
+	z-index: 500;
+	
+	font-size: 14px;
+	background: #f5f5f5;
+	padding: 50px 100px 50px 100px;
+	border: 1px solid #d9a042;
+}
+ 
+ /*  */
+
+a {
+	text-decoration: none;
+	color: #33a;
+}
+
+div.header,
+div.footer {
+	background: #333;
+	padding: 10px 25px 10px 25px;
+	overflow: hidden;
+}
+
+div.header * {
+	color: #ddd;
+	font-size: 14px;
+}
+
+div.footer * {
+	color: #ddd;
+	font-size: 11px;
+}
+
+div.header h1,
+div.footer h1 {
+	float: left;
+}
+
+div.header h2,
+div.footer h2 {
+	float: right;
+}
+
+div.header h1 a,
+div.header h2 a {
+	color: #3e3;
+}
+
+div.b-container {
+	margin: 5px;
+}
+
+div.b-menu {
+	float: left;
+	width: 249px;
+	height: 595px;
+	overflow-y: scroll;
+	padding-right: 1px;
+}
+
+div.b-menu h1 {
+	cursor: pointer;
+	background: #ccc;
+	padding: 5px 15px 5px 15px;
+	font-size: 12px;
+	font-weight:normal;
+	text-transform:uppercase;
+	border-bottom:solid 1px #aaa;
+	border-top:solid 1px #fff;
+}
+
+div.b-menu ul {
+	margin-left: 5px;
+}
+
+div.b-menu li {
+	background: #f9c062;
+	margin-top: 1px;
+}
+
+div.b-menu li:hover {
+    background:#e99022;
+}
+
+div.b-menu li a {
+	color: #fff;
+	display: block;
+	font-size: 12px;
+	padding: 5px 10px 5px 10px;
+}
+
+div.b-menu li a b {
+	display: block;
+	font-size: 9px;
+	font-weight:normal;
+	margin-left: 5px;
+}
+
+/*  */
+
+form {
+	display: block;
+}
+
+input,
+select {
+	width: 100%;
+	border: 1px solid #ddd;
+	border-top: 1px solid #999;
+	padding: 1px;
+}
+
+div.button input {
+	border: 2px solid #aaa;
+	border-top: 2px solid #ccc;
+	border-left: 2px solid #bbb;
+	background: #bbb;
+	color: #444;
+	padding: 2px;
+	cursor: pointer;
+}
+
+div.button input:hover {
+	border: 2px solid #aaa;
+	background: #999;
+	color: #fff;
+}
+
+textarea {
+	display: block;
+	width: 100%;
+	border: 1px solid #ddd;
+	border-top: 1px solid #999;
+}
+
+.textarea-to-full {
+	position: absolute;
+	right: 2px;
+	top: 2px;
+	font-size: 9px;
+	line-height: 12px;
+	background: #ccc;
+	padding: 1px 5px 1px 5px;
+	border: 1px solid #aaa;
+	color: #fff;
+	cursor: pointer;
+}
+
+.textarea-to-full:hover {
+	color: #333;
+}
+
+/*  */
+
+div.b-h {
+	padding: 10px 20px 10px 20px;
+	font-size: 15px;
+	color: #393;
+}
+
+div.b-main {
+	height: 555px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding: 20px;
+}
+
+div.b-block {
+	margin: 0px 0px 10px 0px;
+	border: 1px solid #ccc;
+	background: #fafafa;
+	padding: 15px 15px 15px 15px;
+}
+
+div.b-block h1 {
+	margin: -16px -16px 15px -16px;
+	background: #666;
+	font-size: 11px;
+	color: #fff;
+	padding: 5px;
+	border: 1px solid #666;
+}
+
+div.b-mblock {
+	position: relative;
+	display: block;
+	width: 100%;
+	line-height: 22px;
+	color: #338;
+	border-top: 1px dotted #aaa;
+}
+
+div.b-mblock h1 {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	background: none;
+	color: #393;
+}
+
+div.b-mmenu a {
+	display: inline-block;
+	padding: 5px 10px 5px 10px;
+	font-size: 11px;
+	margin: 5px;
+	background: #f5f5f5;
+	border: 1px dotted #fff;
+	text-transform:uppercase;
+}
+
+div.b-mmenu a:hover {
+	background: #fff;
+}
+
+form div {
+	margin: 5px 2px 5px 2px;
+}
+
+form div.b-h {
+	position: relative;
+	padding: 10px 0px 0px 0px;
+	display: block;
+	width: 100%;
+	font-size: 12px;
+	line-height: 16px;
+	color: #338;
+}
+
+form ins {
+	position: relative;
+	display: block;
+	width: 100%;
+	line-height: 22px;
+	color: #338;
+	padding-top: 3px;
+	border-top: 1px dotted #aaa;
+}
+
+form ins b {
+	display: block;
+	font-size: 9px;
+	line-height: 14px;
+	font-weight:normal;
+	color: #383;
+}
+
+form label {
+	display: inline-block;
+	width: 50%;
+	padding: 2px 0px 2px 0px;
+	font-size: 12px;
+	line-height: 16px;
+	color: #449;
+}
+
+form label:hover {
+	background: #fff;
+	color: #336;
+}
+
+form label input {
+	width: auto;
+	vertical-align: text-bottom;
+	margin: 0px 10px 0px 5px;
+}
+
+form ins input,
+form ins select {
+	margin-top: 2px;
+	float: right;
+	margin-left: 10px;
+	width: 55%;
+}
+
+/*  */
+
+div.b-block table {
+	width: 100%;
+}
+
+div.b-block table tr th,
+div.b-block table tr td {
+	border: 1px solid #bbb;
+	padding: 2px 5px 2px 5px;
+}
+
+div.b-block table tr th {
+	background: #ddd;
+	font-size: 10px;
+}
+
+div.b-block table tr td {
+	background: #eee;
+	text-align: center;
+}

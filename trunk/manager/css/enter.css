@@ -1,0 +1,118 @@
+
+* {
+ 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	line-height: 16px;
+	color: #585858;
+}
+
+html, body {
+	background: #e6e6af;
+}
+
+/*  */
+
+div.alert {
+ 	position: absolute;
+ 	left: 50%;
+ 	top: 50%;
+	z-index: 500;
+	
+	font-size: 14px;
+	background: #f5f5f5;
+	padding: 50px 100px 50px 100px;
+	border: 1px solid #d9a042;
+}
+ 
+ /*  */
+
+div.container {
+ 	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 400px;
+	height: 300px;
+	border-top: 5px solid #d9a042;
+	border-bottom: 5px solid #d9a042;
+	margin: -155px 0px 0px -200px;
+	
+	background: #f5f5f5;
+}
+ 
+div.container b {
+ 	display: block;
+	margin-top: 25px;
+	padding-bottom: 25px;
+	text-align: center;
+	font-size: 16px;
+	line-height: 18px;
+	color: #ca551b;
+}
+
+div.container form {
+ 	position: absolute;
+ 	display: block;
+ 	font-size: 10px;
+	line-height: 14px;
+	width: 220px;
+	left: 50%;
+	margin-left: -110px;
+}
+ 
+div.container form input {
+	border: 0;
+ 	cursor: text;
+ 	width: 100%;
+	background: none;
+}
+
+div.container form div.input {
+ 	cursor: text;
+ 	background: #fafafa;
+	border: 1px solid #d3d3d3;
+	padding: 5px;
+	line-height: 16px;
+}
+ 
+div.container form div.button {
+ 	cursor: pointer;
+ 	background: #f7f7f7;
+	border: 1px solid #d2d2d2;
+	padding: 5px;
+	line-height: 16px;
+	margin-bottom: 10px;
+}
+ 
+div.container form div.button input {
+	cursor: pointer;
+	text-align: center;
+}
+ 
+ins {
+	text-decoration: none;
+ 	position: absolute;
+ 	display: block;
+ 	text-align: center;
+	left: 0px;
+	bottom: 10px;
+	font-size: 9px;
+	width: 100%;
+}
+
+ins.site {
+	bottom: 30px;
+}
+
+ins a {
+ 	font-size: 9px;
+	color: #b20101;
+}
+
+ins a:hover {
+	text-decoration: none;
+}
+
+ins.site a {
+	font-size: 11px;
+	color: #01b201;
+}
