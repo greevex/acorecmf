@@ -1,29 +1,12 @@
 <?
 
-function encode($array, $pref = "\t"){
-	$res = "array(\n";
-	foreach ($array as $i => $v)
-	$res .= $pref .  (!is_numeric($i) ? "'" . str_replace("'", "\\'", $i) . "' => " : "") .
-	(is_array($v) ? encode($v, $pref . "\t") : (is_numeric($v) ? $v : (is_bool($v) ? ($v ? 'true' : 'false') : "'" . str_replace("'", "\\'", $v) . "'"))) . ",\n";
-	return $res . substr($pref, 0, -1) . ")";
-}
+echo "\n\n" . Core::encode(Config::Load('consts'));
 
-function decode($string){
-	eval("\$array = {$string};");
-	return $array;
-}
+echo "\n\n" . Core::encode(Config::Load('core'));
 
-$array = Core::$config;
-$array['consts'] = Core::$data;
-$array['test'] = true;
-echo encode($array);
+echo "\n\n" . Core::encode(Config::Load('db'));
 
-echo "\n\n" . encode(Config::Load('db'));
+echo "\n\n" . Core::encode(Config::Load('system'));
 
-$test = encode(Config::Load('system'));
-
-echo "\n\n" . $test;
-
-echo "\n\n" . encode(decode($test));
 
 ?>
