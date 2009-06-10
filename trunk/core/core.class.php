@@ -97,5 +97,17 @@ class Core {
 		echo json_encode($mod->$func());
 		return;
 	}
+	
+	public static function encode($array, $pref = "\t"){
+		$res = "array(\n";
+		foreach ($array as $i => $v)
+		$res .= $pref .  (!is_numeric($i) ? "'" . str_replace("'", "\\'", $i) . "' => " : "") .
+		(is_array($v) ? encode($v, $pref . "\t") : (is_numeric($v) ? $v : (is_bool($v) ? ($v ? 'true' : 'false') : "'" . str_replace("\n", "\\n", str_replace("'", "\\'", $v)) . "'"))) . ",\n";
+		return $res . substr($pref, 0, -1) . ")";
+	}
+	public static function decode($string){
+		eval("\$array = {$string};");
+		return $array;
+	}
 }
 ?>
