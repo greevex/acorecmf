@@ -8,5 +8,5 @@ session_start();
 define("ROOT", str_replace("/index.php", "", $_SERVER['SCRIPT_FILENAME']));
 include_once("./core/core.class.php");
 include_once("./core/autoload.php");
-Core::Init();
+Core::Run();
 ?>

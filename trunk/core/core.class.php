@@ -3,7 +3,7 @@ class Core {
 
 	public static $data = array();
 	public static $config = null;
-	public static $url = array();
+//	public static $url = array();
 	public static $page = "index";
 	public static $language;
 	public static $modules = array();
@@ -12,58 +12,22 @@ class Core {
 
 	public static $generate_start_time;
 
-	public static function Init(){
+	protected static function Init(){
 		self::$generate_start_time = microtime();
 		self::$config = Config::Load("core");
 		self::$language = self::$config['default_language'];
 
 		self::$data = Config::Load("consts");
-		unset(self::$data['root']); unset(self::$data['rand']);
 		self::$data['root'] = "http://" . $_SERVER['SERVER_NAME'] . str_replace($_SERVER['DOCUMENT_ROOT'], "", ROOT);
 		self::$data['rand'] = rand(0, 1000000000);
-
-		$url = str_replace(str_replace($_SERVER['DOCUMENT_ROOT'], "", ROOT), "", $_SERVER['REDIRECT_URL']);
-		if (strlen($url) > 0){
-			$url = substr($url, 1);
-			if ($url[strlen($url)-1] == "/") $url = substr($url, 0, strlen($url)-1);
-		}
-		self::$url = explode("/", $url);
-
-		foreach (self::$config['languages'] as $pref => $name){
-			if (self::$url[0] == $pref){
-				self::$language = $pref;
-				self::$data['root'] .= "/$pref";
-				unset(self::$url[0]);
-				$url = implode("/", self::$url);
-				self::$url = explode("/", $url);
-				break;
-			}
-		}
-
-		if (self::$url[0] == "manager"){
-			self::$main_folder = "/manager";
-			unset(self::$url[0]);
-			self::$url = implode("/", self::$url);
-			self::$url = explode("/", self::$url);
-		} else if (self::$config['status']=='off' && !isset($_SESSION['manager_name'])){
-			die("Сайт находится в режиме \"только для менеджеров\"!");
-		}
-
-		if (self::$url[0] == "ajax") return self::AjaxOut();
-
-		if (self::$url[0] != ""){
-			$url = self::$url;
-			while (count($url) > 0){
-				$page = implode("/", $url);
-				if (is_file(ROOT . self::$main_folder . "/pages/" . $page . ".html") || is_file(ROOT . self::$main_folder . "/pages/" . $page . "." . self::$language . ".html")){
-					self::$page = $page;
-					return self::Out();
-				}
-				unset($url[count($url) - 1]);
-			}
-			die("Страница не найдена!");
-		}
-		return self::Out();
+	}
+	
+	public static function Run(){
+		self::Init();
+		$processData = UrlManager::ProcessRequest();
+		
+		if ($processData['ajax'] == true) self::AjaxOut();
+		else self::Out();
 	}
 
 	public static function AddModule($mod){
@@ -71,7 +35,7 @@ class Core {
 	}
 
 	public static function GetModule($mod){
-		if (!isset(self::$modules[strtolower($mod)])) require(ROOT . "/core" . (Core::$main_folder == "/manager" ? "/manager/" : "/modules/") . "{$mod}.class.php");
+		if (!isset(self::$modules[strtolower($mod)])) require(ROOT . (Core::$main_folder == "/manager" ? "/manager/" : "/modules/{$mod}/") . "{$mod}.class.php");
 		return self::$modules[strtolower($mod)];
 	}
 
