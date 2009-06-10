@@ -71,7 +71,7 @@ class Core {
 	}
 
 	public static function GetModule($mod){
-		require_once(ROOT . "/core" . (Core::$main_folder == "/manager" ? "/manager/" : "/modules/") . "{$mod}.class.php");
+		if (!isset(self::$modules[strtolower($mod)])) require(ROOT . "/core" . (Core::$main_folder == "/manager" ? "/manager/" : "/modules/") . "{$mod}.class.php");
 		return self::$modules[strtolower($mod)];
 	}
 
