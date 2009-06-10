@@ -1,0 +1,27 @@
+php_flag magic_quotes_gpc 0
+php_flag magic_quotes_runtime 0
+php_flag register_globals 0
+AddDefaultCharset UTF-8
+php_value post_max_size 1173741824
+php_value upload_max_filesize 1073741824
+php_value max_input_time 0
+php_value default_charset UTF-8
+php_value mbstring.func_overload 7
+php_value mbstring.internal_encoding UTF-8
+php_value mbstring.detect_order UTF-8
+
+RewriteEngine on
+
+RewriteRule ^[a-z]{2,2}/(.+)$ $1 [NC,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.+$ index.php [QSA]
+
+RewriteCond %{REQUEST_URI} ^/core [NC,OR]
+RewriteCond %{REQUEST_URI} ^/manager/$ [NC,OR]
+RewriteCond %{REQUEST_URI} ^/manager/pages [NC,OR]
+RewriteCond %{REQUEST_URI} ^/manager/tpls [NC,OR]
+RewriteCond %{REQUEST_URI} ^/pages [NC,OR]
+RewriteCond %{REQUEST_URI} ^/tpls [NC]
+RewriteRule ^.+$ index.php [QSA]
