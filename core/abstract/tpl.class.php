@@ -11,12 +11,15 @@ class ATpl {
 			self::$cache = Core::$main_folder . "|" . $tpl . "|" . Core::$language;
 			self::LoadCache();
 		}
+		
+		$php = false;
 
 		//Если кэшируем
 		if (self::$cache != null){
 			if (!isset(self::$cacheTable[$tpl])){
 				self::$cacheUpdated = true;
-				$content = self::Load($tpl, $filename);
+				$content = self::Load($tpl, $filename, $php);
+				if ($php) return $content;
 				self::$cacheTable[$tpl] = array(time(), $filename, $content);
 				unset($content);
 			}
@@ -24,14 +27,27 @@ class ATpl {
 		}
 
 		//Если не кэшируем
-		if (!isset(self::$tpls[$tpl])) self::$tpls[$tpl] = self::Load($tpl);
+		if (!isset(self::$tpls[$tpl])){
+			self::$tpls[$tpl] = self::Load($tpl, null, $php);
+			if ($php){
+				$result = self::$tpls[$tpl];
+				unset(self::$tpls[$tpl]);
+				return $result;
+			}
+		}
 		return self::Parse(self::$tpls[$tpl]);
 	}
 
-	private static function Load($tpl, &$filename = null){
+	private static function Load($tpl, &$filename = null, &$php = null){
 		$content = "";
 		$type = $tpl[0] == "_" ? "/tpls/" : "/pages/";
-		if (is_file(ROOT . Core::$main_folder . $type . $tpl . "." . Core::$language . ".html")){
+		if (is_file(ROOT . Core::$main_folder . $type . $tpl . "." . Core::$language . ".php")){
+			$php = true;
+			return self::IncludePHP(ROOT . Core::$main_folder . $type . $tpl . "." . Core::$language . ".php");
+		} else if (is_file(ROOT . Core::$main_folder . $type . $tpl . ".php")){
+			$php = true;
+			return self::IncludePHP(ROOT . Core::$main_folder . $type . $tpl . ".php");
+		} else if (is_file(ROOT . Core::$main_folder . $type . $tpl . "." . Core::$language . ".html")){
 			$filename = ROOT . Core::$main_folder . $type . $tpl . "." . Core::$language . ".html";
 			$content = file_get_contents(ROOT . Core::$main_folder . $type . $tpl . ".html");
 		} else if (is_file(ROOT . Core::$main_folder . $type . $tpl . ".html")){
@@ -40,6 +56,14 @@ class ATpl {
 		}
 		if (self::$cache != null)
 		$content = self::toEval($content);
+		return $content;
+	}
+	
+	private function IncludePHP($file){
+		ob_start();
+		include($file);
+		$content = ob_get_contents();
+		ob_end_clean();
 		return $content;
 	}
 

@@ -69,8 +69,10 @@ class AUrlManager
 		while (count(self::$url) > 0)
 		{
 			$page = implode('/', self::$url);
-			echo $page;
-			if (is_file(ROOT . Core::$main_folder . "/pages/" . $page . ".html") || is_file(ROOT . Core::$main_folder . "/pages/" . $page . "." . Core::$language . ".html"))
+			if (is_file(ROOT . Core::$main_folder . "/pages/" . $page . ".php")
+				|| is_file(ROOT . Core::$main_folder . "/pages/" . $page . "." . Core::$language . ".php")
+				|| is_file(ROOT . Core::$main_folder . "/pages/" . $page . ".html")
+				|| is_file(ROOT . Core::$main_folder . "/pages/" . $page . "." . Core::$language . ".html"))
 			{
 				Core::$page = $page;
 				return;
