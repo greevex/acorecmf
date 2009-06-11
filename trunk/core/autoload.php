@@ -12,7 +12,7 @@ function __autoload($classname) {
 	$class = $classname;
 	
 	#Проверяем, асбтрактный ли класс
-	if ($classname{0} == 'A' && (strtolower($classname[1])!=$classname[1])) {
+	if ($classname{0} == 'A' && (strtolower($classname{1})!=$classname{1})) {
 		//убираем первую букву А, чтобы подключить файл
 		$classname = strtolower(substr($classname, 1, (strlen($classname)-1)));
 		//добавляем в путь core папку abstract, так как класс абстрактный
