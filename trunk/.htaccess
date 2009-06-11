@@ -18,10 +18,10 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^.+$ index.php [QSA]
 
-RewriteCond %{REQUEST_URI} !^/core [NC,OR]
-RewriteCond %{REQUEST_URI} !^/manager/$ [NC,OR]
-RewriteCond %{REQUEST_URI} !^/manager/pages [NC,OR]
-RewriteCond %{REQUEST_URI} !^/manager/tpls [NC,OR]
-RewriteCond %{REQUEST_URI} !^/pages [NC,OR]
-RewriteCond %{REQUEST_URI} !^/tpls [NC]
-RewriteRule ^.+$ index.php [QSA]
+RewriteCond $1 ^/core [NC,OR]
+RewriteCond $1 ^/manager/$ [NC,OR]
+RewriteCond $1 ^/manager/pages [NC,OR]
+RewriteCond $1 ^/manager/tpls [NC,OR]
+RewriteCond $1 ^/pages [NC,OR]
+RewriteCond $1 ^/tpls [NC]
+RewriteRule ^(.+)$ index.php [QSA]
