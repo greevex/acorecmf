@@ -31,7 +31,7 @@ class AUrlManager
 		if (isset(Core::$config['languages'][self::$url[0]]))
 		{
 			Core::$language = self::$url[0];
-			Core::$data['root'] .= '/' . self::$url[0];
+			Core::$data['lang_root'] .= '/' . self::$url[0];
 			array_splice(self::$url, 0, 1);
 		}
 		return true;
