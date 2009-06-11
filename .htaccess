@@ -12,6 +12,4 @@ php_value mbstring.detect_order UTF-8
 
 RewriteEngine on
 
-RewriteRule ^[a-z]{2,2}/(.+)$ $1 [NC,QSA]
-
 RewriteRule ^(.+)$ index.php [QSA]
