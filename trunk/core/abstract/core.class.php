@@ -30,14 +30,14 @@ class ACore {
 		if ($processData['ajax'] == true) self::AjaxOut();
 		else self::Out();
 	}
-
-	public static function AddModule($mod){
-		self::$modules[strtolower(get_class($mod))] = &$mod;
-	}
-
+	
 	public static function GetModule($mod){
-		if (!isset(self::$modules[strtolower($mod)])) require(ROOT . "/modules/"."{$mod}/{$mod}.php");
-		return self::$modules[strtolower($mod)];
+		$mod = strtolower($mod);
+		if (!isset(self::$modules[$mod])){
+			require(ROOT . "/modules/"."{$mod}/{$mod}.php");
+			self::$modules[$mod] = new $mod();
+		}
+		return self::$modules[$mod];
 	}
 
 	public static function GetConst($name){
