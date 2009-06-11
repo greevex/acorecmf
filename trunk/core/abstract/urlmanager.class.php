@@ -62,9 +62,7 @@ class AUrlManager
 
 	protected static function ParsePage()
 	{
-		if (empty(self::$url[0]))
-		return;
-
+		if (empty(self::$url[0])) return;
 
 		while (count(self::$url) > 0)
 		{
