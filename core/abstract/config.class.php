@@ -6,14 +6,14 @@
 class AConfig {
 	public static function Load($name, $module = null){
 		if ($module !== null){
-			if (is_file(ROOT . "/modules/{$module}/config/{$name}")){
-				return Core::decode(file_get_contents(ROOT . "/modules/{$module}/config/{$name}"));
+			if (is_file(ROOT . "/modules/{$module}/config/{$name}.php")){
+				return include(ROOT . "/modules/{$module}/config/{$name}.php");
 			} else {
 				return array();
 			}
 		}
-		if (is_file(ROOT . "/core/config/{$name}")){
-			return Core::decode(file_get_contents(ROOT . "/core/config/{$name}"));
+		if (is_file(ROOT . "/core/config/{$name}.php")){
+			return include(ROOT . "/core/config/{$name}.php");
 		} else {
 			return array();
 		}

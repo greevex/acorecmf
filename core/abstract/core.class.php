@@ -17,7 +17,7 @@ class ACore {
 		self::$config = Config::Load("core");
 		self::$language = self::$config['default_language'];
 
-		self::$data = Config::Load("consts");
+		self::$data = self::$config['consts'];
 		self::$data['root'] = "http://" . $_SERVER['SERVER_NAME'] . str_replace($_SERVER['DOCUMENT_ROOT'], "", ROOT);
 		self::$data['rand'] = rand(0, 1000000000);
 	}
@@ -64,15 +64,22 @@ class ACore {
 	}
 	
 	public static function encode($array, $pref = "\t"){
-		$res = "array(\n";
+		if ($pref == "\t"){
+			$res = "<?php\nreturn array(\n";
+		} else {
+			$res = "array(\n";
+		}
 		foreach ($array as $i => $v)
 		$res .= $pref .  (!is_numeric($i) ? "'" . str_replace("'", "\\'", $i) . "' => " : "") .
 		(is_array($v) ? self::encode($v, $pref . "\t") : (is_numeric($v) ? $v : (is_bool($v) ? ($v ? 'true' : 'false') : "'" . str_replace("'", "\\'", $v)) . "'")) . ",\n";
-		return $res . substr($pref, 0, -1) . ")";
+		if ($pref == "\t"){
+			return $res . substr($pref, 0, -1) . ");\n?>";
+		} else {
+			return $res . substr($pref, 0, -1) . ")";
+		}
 	}
-	public static function decode($string){
-		eval("\$array = {$string};");
-		return $array;
+	public static function decode($file){
+		return include($file);
 	}
 }
 ?>
