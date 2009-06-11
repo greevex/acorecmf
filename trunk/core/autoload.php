@@ -23,6 +23,11 @@ function __autoload($classname) {
 			exit("Невозможно найти абстракный модуль `{$class}`!");
 		}
 	} else {
+		//Для выводных классов OutName
+		if (substr($classname, 0, 3) == "Out" && strlen($classname) > 3){
+			$core .= "/abstract/out/";
+			$classname = substr($classname, 3);
+		}
 		#Переводим в нижний регистр
 		$classname = strtolower($classname);
 		#Подключаем. Сначала проверяем не переопределен ли как модуль.

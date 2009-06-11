@@ -105,10 +105,11 @@ class System extends AModule {
 		}
 		$res .= "</ul>";
 
-		$dir = ROOT . "/core/manager/";
+		$dir = ROOT . "/modules/";
 		$modules = scandir($dir);
 		foreach ($modules as $i => $mod){
-			if (!preg_match("/\.class\.php/", $mod) || $mod == "system.class.php") continue;
+			if (!is_dir($dir . $mod) || $mod{0} == "." || $mod == "system") continue;
+			//if (!preg_match("/\.class\.php/", $mod) || $mod == "system.class.php") continue;
 			$mod = &Core::GetModule(str_replace('.class.php', '', $mod));
 			if ($mod->mod_name !== null){
 				$res .= "<h1 class=\"menusection\">{$mod->mod_name}</h1><ul class=\"menusection\">";
