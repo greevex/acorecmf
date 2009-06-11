@@ -14,28 +14,24 @@ function __autoload($classname) {
 	if ($classname{0} == 'A' && (strtolower($classname{1})!=$classname{1})) {
 		//убираем первую букву А, чтобы подключить файл
 		$classname = strtolower(substr($classname, 1, (strlen($classname)-1)));
-		//добавляем в путь core папку abstract, так как класс абстрактный
-		if(is_file("{$core}abstract/{$classname}.class.php"))
-		{
+		//добавляем в путь core папку abstract, так как класс абстрактный и подключаем.
+		if(is_file("{$core}abstract/{$classname}.class.php")) {
 			require("{$core}abstract/{$classname}.class.php");
-		} else
-		{
+		} else {
 			exit("Невозможно найти абстракный модуль `{$class}`!");
 		}
 	} else {
 		//Для выводных классов OutName
-		if (substr($classname, 0, 3) == "Out" && strlen($classname) > 3){
-			$core .= "/abstract/out/";
+		if (substr($classname, 0, 3) == "Out" && strlen($classname) > 3) {
+			$core .= "abstract/out/";
 			$classname = substr($classname, 3);
 		}
 		#Переводим в нижний регистр
 		$classname = strtolower($classname);
-		#Подключаем. Сначала проверяем не переопределен ли как модуль.
-		if (is_file("{$core}{$classname}.class.php"))
-		{
+		#Подключаем.
+		if (is_file("{$core}{$classname}.class.php")) {
 			require("{$core}{$classname}.class.php");
-		} else
-		{
+		} else {
 			exit("Невозможно найти модуль `{$class}`!");
 		}
 	}
