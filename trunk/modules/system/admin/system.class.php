@@ -14,7 +14,7 @@ class System extends AModule {
 	 */
 	public function __construct()
 	{
-		$this->config = Config::Load("system");
+		$this->config = Config::Load("system", "system");
 
 		$this->SetName("Основное");
 
