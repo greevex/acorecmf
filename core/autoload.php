@@ -7,27 +7,25 @@
 function __autoload($classname) {
 	$modu = ROOT."/modules/";
 	$core = ROOT."/core/";
+	$class = $classname;
 	
 	#Проверяем, асбтрактный ли класс
 	if ($classname{0} == 'A' && (strtolower($classname[1])!=$classname[1])) {
 		//убираем первую букву А, чтобы подключить файл
-		$classname = substr($classname, 1, (strlen($classname)-1));
+		$classname = strtolower(substr($classname, 1, (strlen($classname)-1)));
 		//добавляем в путь core папку abstract, так как класс абстрактный
-		$core = $core."abstract/";
-	}
-	
-	#Переводим в нижний регистр
-	$classname = strtolower($classname);
-	
-	#Подключаем. Сначала проверяем не переопределен ли как модуль.
-	#Затем проверяем в движке. (абстракный или нет проверили выше)
-	if (is_file("{$modu}{$classname}/{$classname}.php")) {
-		require("{$modu}{$classname}/{$classname}.php");
-	}
-	elseif (is_file("{$core}{$classname}.class.php")) {
-			require("{$core}{$classname}.class.php");
+		if(is_file("{$core}abstract/{$classname}.class.php"))
+			require("{$core}abstract/{$classname}.class.php");
+		else exit("Невозможно найти абстракный модуль `{$class}`!");
 	} else {
-		die("Невозможно найти модуль `{$classname}`!");
+		#Переводим в нижний регистр
+		$classname = strtolower($classname);
+		#Подключаем. Сначала проверяем не переопределен ли как модуль.
+		if (is_file("{$modu}{$classname}/{$classname}.php"))
+			require("{$modu}{$classname}/{$classname}.php");
+		elseif (is_file("{$core}{$classname}.class.php"))
+				require("{$core}{$classname}.class.php");
+		else 	exit("Невозможно найти модуль `{$class}`!");
 	}
 }
 ?>
