@@ -5,7 +5,6 @@
  * @param string $classname Имя класса
  */
 function __autoload($classname) {
-	$modu = ROOT."/modules/";
 	$core = ROOT."/core/";
 	
 	//Для вывода в исходном виде
@@ -23,9 +22,7 @@ function __autoload($classname) {
 		#Переводим в нижний регистр
 		$classname = strtolower($classname);
 		#Подключаем. Сначала проверяем не переопределен ли как модуль.
-		if (is_file("{$modu}{$classname}/{$classname}.php"))
-			require("{$modu}{$classname}/{$classname}.php");
-		elseif (is_file("{$core}{$classname}.class.php"))
+		if (is_file("{$core}{$classname}.class.php"))
 				require("{$core}{$classname}.class.php");
 		else 	exit("Невозможно найти модуль `{$class}`!");
 	}
