@@ -7,6 +7,8 @@
 function __autoload($classname) {
 	$modu = ROOT."/modules/";
 	$core = ROOT."/core/";
+	
+	//Для вывода в исходном виде
 	$class = $classname;
 	
 	#Проверяем, асбтрактный ли класс
