@@ -1,8 +1,0 @@
-array(
-	'status' => 'on',
-	'default_language' => 'ru',
-	'languages' => array(
-		'ru' => 'Русский',
-		'en' => 'English',
-	),
-)
