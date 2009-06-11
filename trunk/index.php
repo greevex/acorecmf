@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * ACore Content Manager Framework
  * @copyright Copyright (C) 2009, AlArta Studio <www.alarta.ru>
