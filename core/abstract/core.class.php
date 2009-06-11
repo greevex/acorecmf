@@ -19,6 +19,7 @@ class ACore {
 
 		self::$data = self::$config['consts'];
 		self::$data['root'] = "http://" . $_SERVER['SERVER_NAME'] . str_replace($_SERVER['DOCUMENT_ROOT'], "", ROOT);
+		self::$data['lang_root'] = self::$data['root'];
 		self::$data['rand'] = rand(0, 1000000000);
 	}
 	
