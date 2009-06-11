@@ -4,7 +4,14 @@
  * @author Кваст Александр Владимирович
  */
 class AConfig {
-	public static function Load($name){
+	public static function Load($name, $module = null){
+		if ($module !== null){
+			if (is_file(ROOT . "/modules/{$module}/config/{$name}")){
+				return Core::decode(file_get_contents(ROOT . "/modules/{$module}/config/{$name}"));
+			} else {
+				return array();
+			}
+		}
 		if (is_file(ROOT . "/core/config/{$name}")){
 			return Core::decode(file_get_contents(ROOT . "/core/config/{$name}"));
 		} else {
