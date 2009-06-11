@@ -645,5 +645,4 @@ class System extends AModule {
 	}
 
 }
-Core::AddModule(new System());
 ?>

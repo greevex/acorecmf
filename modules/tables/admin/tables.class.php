@@ -49,5 +49,4 @@ class Tables extends AModule {
 	}
 	
 }
-Core::AddModule(new tables());
 ?>

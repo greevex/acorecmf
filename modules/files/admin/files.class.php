@@ -17,5 +17,4 @@ class Files extends AModule {
 	}
 	
 }
-Core::AddModule(new Files());
 ?>

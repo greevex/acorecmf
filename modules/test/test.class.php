@@ -8,5 +8,4 @@ class Test {
 	}
 	
 }
-Core::AddModule(new Test());
 ?>

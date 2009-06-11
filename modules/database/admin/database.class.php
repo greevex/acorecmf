@@ -115,5 +115,4 @@ class DataBase extends AModule {
 	}
 	
 }
-Core::AddModule(new DataBase());
 ?>
