@@ -3,7 +3,7 @@ class ACore {
 
 	public static $data = array();
 	public static $config = null;
-//	public static $url = array();
+	public static $url = array();
 	public static $page = "index";
 	public static $language;
 	public static $modules = array();
@@ -25,6 +25,7 @@ class ACore {
 	public static function Run(){
 		self::Init();
 		$processData = UrlManager::ProcessRequest();
+		self::$url = &UrlManager::$url;
 		
 		if ($processData['ajax'] == true) self::AjaxOut();
 		else self::Out();

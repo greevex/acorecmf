@@ -1,7 +1,7 @@
 <?php
 class AUrlManager
 {
-	private static $url = array();
+	public static $url = array();
 
 	public static function ProcessRequest()
 	{
