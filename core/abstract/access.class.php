@@ -4,7 +4,7 @@
  */
 class AAccess {
 	public static function Create($mod, $mod_name) {
-		$config = Config::Load("system");
+		$config = Config::Load("system", "system");
 		if (session_is_registered("manager_name") && isset ($config['managers'][$_SESSION['manager_name']])) {
 			$login = $_SESSION['manager_name'];
 		} else {
