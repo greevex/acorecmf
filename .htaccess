@@ -14,14 +14,4 @@ RewriteEngine on
 
 RewriteRule ^[a-z]{2,2}/(.+)$ $1 [NC,QSA]
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^.+$ index.php [QSA]
-
-RewriteCond $1 ^/core [NC,OR]
-RewriteCond $1 ^/manager/$ [NC,OR]
-RewriteCond $1 ^/manager/pages [NC,OR]
-RewriteCond $1 ^/manager/tpls [NC,OR]
-RewriteCond $1 ^/pages [NC,OR]
-RewriteCond $1 ^/tpls [NC]
 RewriteRule ^(.+)$ index.php [QSA]
