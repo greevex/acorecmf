@@ -5,25 +5,20 @@
  */
 class AConfig {
 	public static function Load($name, $module = null){
-		if ($module !== null){
-			if (is_file(ROOT . "/modules/{$module}/config/{$name}.php")){
-				return include(ROOT . "/modules/{$module}/config/{$name}.php");
-			} else {
-				return array();
-			}
-		}
-		if (is_file(ROOT . "/core/config/{$name}.php")){
-			return include(ROOT . "/core/config/{$name}.php");
+		$file = ROOT . ($module === null ? "/core/config/" : "/modules/{$module}/config/") . "{$name}.php";
+		if (is_file($file)){
+			return include($file);
 		} else {
 			return array();
 		}
 	}
-	public static function Save($name, $config){
-		if (is_file(ROOT . "/core/config/{$name}")) chmod(ROOT . "/core/config/" . $name, 0777);
-		$file = fopen(ROOT . "/core/config/" . $name, "w");
-		fwrite($file, Core::encode($config));
-		fclose($file);
-		chmod(ROOT . "/core/config/" . $name, 0755);
+	public static function Save($name, $config, $module = null){
+		$file = ROOT . ($module === null ? "/core/config/" : "/modules/{$module}/config/") . "{$name}.php";
+		if (is_file($file)) chmod($file, 0777);
+		$h = fopen($file, "w");
+		fwrite($h, Core::encode($config));
+		fclose($h);
+		chmod($file, 0755);
 	}
 }
 ?>

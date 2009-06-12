@@ -1,3 +1,7 @@
 <?php
-include 'test.class.php';
+if (Core::$main_folder == "/manager"){
+	
+} else {
+	include 'test.class.php';
+}
 ?>

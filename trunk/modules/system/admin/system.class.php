@@ -109,7 +109,6 @@ class System extends AModule {
 		$modules = scandir($dir);
 		foreach ($modules as $i => $mod){
 			if (!is_dir($dir . $mod) || $mod{0} == "." || $mod == "system") continue;
-			//if (!preg_match("/\.class\.php/", $mod) || $mod == "system.class.php") continue;
 			$mod = &Core::GetModule(str_replace('.class.php', '', $mod));
 			if ($mod->mod_name !== null){
 				$res .= "<h1 class=\"menusection\">{$mod->mod_name}</h1><ul class=\"menusection\">";
@@ -164,17 +163,17 @@ class System extends AModule {
 				return array('res' => 'Пароли не совпадают!');
 			}
 			$this->config['managers'][$this->login]['pass'] = $_POST['new_pass'];
-			Config::Save('system', $this->config);
+			Config::Save('system', $this->config, 'system');
 			return array('res' => 'Пароль изменен!');
 		}
 		if (isset($_POST['changeMail'])){
 			$this->config['managers'][$this->login]['mail'] = $_POST['mail'];
-			Config::Save('system', $this->config);
+			Config::Save('system', $this->config, 'system');
 			return array('res' => 'Почтовый адрес изменен!');
 		}
 		if (isset($_POST['changeNotepad'])){
 			$this->config['managers'][$this->login]['notepad'] = $_POST['text'];
-			Config::Save('system', $this->config);
+			Config::Save('system', $this->config, 'system');
 			return array('res' => 'Заметки сохранены!');
 		}
 		return array('res' => 'Неизвестное действие!');
@@ -281,7 +280,7 @@ class System extends AModule {
 
 		$types = OutSelect::Select('m_type', 'Тип менеджера:');
 		foreach($this->config['m_types'] as $id => $type) $types->add($id, $type['name']);
-		
+
 		$res['content'] .=
 		OutForm::Form('Новый менеджер:', 'system', 'editManagers')
 		->add(OutInput::Text('name', 'Имя менеджера:', null, null, 'Введите имя менеджера!'))
@@ -313,10 +312,10 @@ class System extends AModule {
 				return array('res' => "Менеджер с таким именем уже существует!");
 			}
 			$this->config['managers'][$_POST['name']] = array('pass' => $_POST['pass'], 'mail' => $_POST['mail'], 'm_type' => (int)$_POST['m_type']);
-			Config::Save('system', $this->config);
+			Config::Save('system', $this->config, 'system');
 			return array('reload' => true, 'res' => "Менеджер добавлен!");
 		}
-		
+
 		if (isset($_POST['editManager'])){
 			if (!isset($this->config['managers'][$_POST['old_name']])){
 				return array('reload' => true, 'res' => "Менеджер не найден!");
@@ -329,22 +328,22 @@ class System extends AModule {
 			if ($_POST['pass'] != ""){
 				$this->config['managers'][$_POST['name']]['pass'] = $_POST['pass'];
 			}
-			Config::Save('system', $this->config);
+			Config::Save('system', $this->config, 'system');
 			if ($_POST['old_name'] != $_POST['name']){
 				return array('reload' => true, 'res' => "Сохранено!");
 			}
 			return array('res' => "Сохранено!");
 		}
-		
+
 		if (isset($_POST['deleteManager'])){
 			if (!isset($this->config['managers'][$_POST['old_name']])){
 				return array('reload' => true, 'res' => "Менеджер не найден!");
 			}
 			unset($this->config['managers'][$_POST['old_name']]);
-			Config::Save('system', $this->config);
+			Config::Save('system', $this->config, 'system');
 			return array('reload' => true, 'res' => "Менеджер удален!");
 		}
-		
+
 		return array('res' => "Неизвестное действие!");
 	}
 
@@ -357,13 +356,15 @@ class System extends AModule {
 		if (!$this->Access('managersPage')) return array('err' => 'true');
 		$res = array('content' => '');
 
-		$files = scandir(ROOT . "/core/manager/");
+		$files = scandir(ROOT . "/modules/");
 		$modules = array("system");
-		foreach ($files as $file)
-		if (preg_match("/\.class\.php/", $file)){
-			$mod = substr($file, 0, strlen($file) - 10);
-			if ($mod != "system" && Core::GetModule($mod)->mod_name !== null)
-			$modules[] = $mod;
+		foreach ($files as $file){
+			if (!is_dir(ROOT . "/modules/" . $file) || $file{0} == "." || $file == "system") continue;
+			try {
+				if (Core::GetModule($file)->mod_name !== null){
+					$modules[] = $file;
+				}
+			} catch (Exception $e){ }
 		}
 
 		$checkboxes = "";
@@ -432,7 +433,7 @@ class System extends AModule {
 				if (strstr($name, "|")) $mods[] = $name;
 			}
 			$this->config['m_types'][] = array('name' => $_POST['name'], 'mods' => $mods);
-			Config::Save('system', $this->config);
+			Config::Save('system', $this->config, 'system');
 
 			return array('reload' => 'true', 'res' => "Новый тип привелегий добавлен!");
 		}
@@ -454,7 +455,7 @@ class System extends AModule {
 				$this->config['m_types'][0] = array('name' => $_POST['name']);
 			}
 
-			Config::Save('system', $this->config);
+			Config::Save('system', $this->config, 'system');
 
 			if ($reload){
 				return array('reload' => 'true', 'res' => "Тип привелегий изменен!");
@@ -476,7 +477,7 @@ class System extends AModule {
 			foreach ($this->config['managers'] as $name => $manager){
 				if ((int)$manager['m_type'] > $_POST['id']) $this->config['managers'][$name]['m_type'] = (int)$manager['m_type'] - 1;
 			}
-			Config::Save('system', $this->config);
+			Config::Save('system', $this->config, 'system');
 			return array('reload' => 'true', 'res' => "Тип привелегий удален!");
 		}
 
@@ -491,10 +492,10 @@ class System extends AModule {
 	public function ajax_constsPage(){
 		if (!$this->Access('constsPage')) return array('err' => 'true');
 		$res = array('content' => '');
-		
+
 		$consts = array();
 		foreach (Core::$data as $name => $value){
-			if ($name == 'root' || $name == 'rand'){
+			if ($name == 'root' || $name == 'lang_root' || $name == 'rand'){
 				$consts[] = array($name, 'предопределенная константа', '', '');
 				continue;
 			}
@@ -508,17 +509,17 @@ class System extends AModule {
 				'' . OutLink::Ajax('system', 'editConsts', 'удалить', 'Удалить?', array('deleteConst' => true, 'name' => $name)));
 			}
 		}
-		
+
 		$res['content'] .=
 		OutBlock::Menu()
 		->add(OutLink::Module('system', 'addConstPage', 'Добавить константу', 'Добавление константы'))
 		->add(OutLink::Module('system', 'addMLConstPage', 'Добавить мультиязычную константу', 'Добавление мультиязычной константы'))
 		. OutTable::Table('Константы:', 'system|consts')
 		->setTh('Имя:', 'Тип:', '', '')->setArray($consts);
-		
+
 		return $res;
 	}
-	
+
 	/**
 	 * Страница добавления простых констант
 	 *
@@ -527,16 +528,16 @@ class System extends AModule {
 	public function ajax_addConstPage(){
 		if (!$this->Access('constsPage')) return array('err' => 'true');
 		$res = array('content' => '');
-		
+
 		$res['content'] .=
 		OutForm::Form('Добавление мультиязычной константы', 'system', 'editConsts')
 		->add(OutInput::Text('name', 'Имя константы:', null, null, 'Введите имя константы!'))
 		->add(OutInput::Text('text', 'Содержимое:'))
 		->add(OutInput::Submit('addConst', 'добавить'));
-		
+
 		return $res;
 	}
-	
+
 	/**
 	 * Страница добавления мультиязычных констант
 	 *
@@ -545,16 +546,16 @@ class System extends AModule {
 	public function ajax_addMLConstPage(){
 		if (!$this->Access('constsPage')) return array('err' => 'true');
 		$res = array('content' => '');
-		
+
 		$res['content'] .=
 		OutForm::Form('Добавление мультиязычной константы', 'system', 'editConsts')
 		->add(OutInput::Text('name', 'Имя константы:', null, null, 'Введите имя константы!'))
 		->add(OutInput::MLText('text', 'Содержимое:'))
 		->add(OutInput::Submit('addConst', 'добавить'));
-		
+
 		return $res;
 	}
-	
+
 	/**
 	 * Страница редактирования константы
 	 *
@@ -562,23 +563,23 @@ class System extends AModule {
 	 */
 	public function ajax_editConstPage(){
 		if (!$this->Access('constsPage', 'editConsts')) return array('err' => 'true');
-		
+
 		if (!isset(Core::$data[$_POST['name']])){
 			return array('content' => 'Константа не найдена!');
 		}
-		
+
 		$res = array('content' => '');
-		
+
 		$res['content'] .=
 		OutForm::Form('Редактирование константы:', 'system', 'editConsts')
 		->add(OutInput::Hidden('old_name', $_POST['name']))
 		->add(OutInput::Text('name', 'Имя константы:', null, $_POST['name'], 'Введите имя константы!'))
 		->add(is_array(Core::$data[$_POST['name']]) ? OutInput::MLText('text', 'Содержимое:', null, Core::$data[$_POST['name']]) : OutInput::Text('text', 'Содержимое:', null, Core::$data[$_POST['name']]))
 		->add(OutInput::Submit('editConst', 'сохранить'));
-		
+
 		return $res;
 	}
-	
+
 	/**
 	 * Редактирование, удаление и добавление констант
 	 *
@@ -586,60 +587,62 @@ class System extends AModule {
 	 */
 	public function ajax_editConsts(){
 		if (!$this->Access('constsPage', 'editConsts')) return array('err' => 'true');
-		
+
 		if (isset($_POST['addConst'])){
 			if (isset(Core::$data[$_POST['name']])){
 				return array('res' => 'Константа с таким именем уже существует!');
 			}
-			Core::$data[$_POST['name']] = $_POST['text'];
-			Config::Save('consts', Core::$data);
+			Core::$config['consts'][$_POST['name']] = $_POST['text'];
+			Config::Save('core', Core::$config);
 			return array('res' => 'Константа добавлена!');
 		}
-		
+
 		if (isset($_POST['editConst'])){
 			if (!isset(Core::$data[$_POST['old_name']])){
 				return array('reload' => true, 'res' => 'Константа не найдена!');
 			}
-			if ($_POST['old_name'] != $_POST['name']) unset(Core::$data[$_POST['old_name']]);
-			Core::$data[$_POST['name']] = $_POST['text'];
-			Config::Save('consts', Core::$data);
+			if ($_POST['old_name'] != $_POST['name']) unset(Core::$config['consts'][$_POST['old_name']]);
+			Core::$config['consts'][$_POST['name']] = $_POST['text'];
+			Config::Save('core', Core::$config);
 			return array('res' => 'Сохранено!');
 		}
-		
+
 		if (isset($_POST['deleteConst'])){
 			if (!isset(Core::$data[$_POST['name']])){
 				return array('reload' => true, 'res' => 'Константа не найдена!');
 			}
-			unset(Core::$data[$_POST['name']]);
-			Config::Save('consts', Core::$data);
+			unset(Core::$config['consts'][$_POST['name']]);
+			Config::Save('core', Core::$config);
 			return array('reload' => true, 'res' => 'Константа удалена!');
 		}
-		
+
 		return array('res' => "Неизвестное действие!");
 	}
-	
+
 	public function ajax_pagesPage(){
 		if (!$this->Access('pagesPage')) return array('err' => 'true');
 		$res = array('content' => '');
-		
+
 		$pages = array();
 		$this->getPagesIn('', $pages);
-		
+
 		$res['content'] .=
 		OutTable::Table('Страницы:', 'system|pages')
 		->setTh('Страница:', '', '')->setArray($pages);
-		
+
 		return $res;
 	}
-	
+
 	public function getPagesIn($folder, &$array){
 		$files = scandir(ROOT . "/pages" . $folder);
 		foreach ($files as $file){
-			if ($file == '.' || $file == '..') continue;
+			if ($file{0} == '.') continue;
 			if (is_dir(ROOT . "/pages" . $folder . "/" . $file)){
 				$this->getPagesIn($folder . "/" . $file, $array);
-			} else if (strstr(".html", $file) !== null) {
-				$array[] = array($folder . "/" . substr($file, 0, - 5) . "/", 'редактировать', 'удалить');
+			} else if (strstr($file, ".html") !== false) {
+				$array[] = array("TPL: " . $folder . "/" . substr($file, 0, - 5) . "/", 'редактировать', 'удалить');
+			} else if (strstr($file, ".php") !== false) {
+				$array[] = array("PHP: " . $folder . "/" . substr($file, 0, - 4) . "/", 'редактировать', 'удалить');
 			}
 		}
 	}

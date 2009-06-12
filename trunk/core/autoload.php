@@ -18,7 +18,7 @@ function __autoload($classname) {
 		if(is_file("{$core}abstract/{$classname}.class.php")) {
 			require("{$core}abstract/{$classname}.class.php");
 		} else {
-			exit("Невозможно найти абстракный модуль `{$class}`!");
+			throw new Exception("Невозможно найти абстракный модуль `{$class}`!");
 		}
 	} else {
 		//Для выводных классов OutName
@@ -32,7 +32,7 @@ function __autoload($classname) {
 		if (is_file("{$core}{$classname}.class.php")) {
 			require("{$core}{$classname}.class.php");
 		} else {
-			exit("Невозможно найти модуль `{$class}`!");
+			throw new Exception("Невозможно найти модуль `{$class}`!");
 		}
 	}
 }

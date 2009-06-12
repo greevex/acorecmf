@@ -38,7 +38,9 @@ class ACore {
 	public static function GetModule($mod){
 		$mod = strtolower($mod);
 		if (!isset(self::$modules[$mod])){
-			require(ROOT . "/modules/"."{$mod}/{$mod}.php");
+			if (!is_file(ROOT . "/modules/{$mod}/{$mod}.php")) throw new Exception("Не найден модуль `{$mod}`!");
+			require(ROOT . "/modules/{$mod}/{$mod}.php");
+			if (!class_exists($mod)) throw new Exception("Класс `{$mod}` не определен!");
 			self::$modules[$mod] = new $mod();
 		}
 		return self::$modules[$mod];

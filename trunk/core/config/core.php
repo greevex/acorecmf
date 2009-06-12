@@ -10,7 +10,7 @@ return array(
 		'title' => 'Acore CMF',
 		'test' => array(
 			'ru' => 'Тестовая константа',
-			'en' => 'Test const',
+			'en' => 'Simple test const',
 		),
 	),
 );
