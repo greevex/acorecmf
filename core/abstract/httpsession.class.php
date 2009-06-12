@@ -29,6 +29,14 @@ class AHttpSession implements IteratorAggregate, ArrayAccess
 		global $_SESSION;
 		$this->session = &$_SESSION;
 	}
+	
+	private static $object = null;
+	public static function GetSession(){
+		if (self::$object === null){
+			self::$object = new HttpSession();
+		}
+		return self::$object;
+	}
 
 	/**
 	 * An abstract method of IteratorAggregate interface which allows to use this object in foreach loops.
