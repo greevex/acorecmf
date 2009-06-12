@@ -4,7 +4,7 @@ return array(
 		'admin' => array(
 			'pass' => 'password',
 			'mail' => 'admin@localhost',
-			'type' => 0,
+			'm_type' => 0,
 			'notepad' => '',
 		),
 	),

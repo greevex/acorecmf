@@ -1,5 +1,5 @@
 <?php
-if (Core::$main_folder == "/manager"){
+if (defined("MANAGED")){
 	include 'admin/database.class.php';
 } else {
 	
