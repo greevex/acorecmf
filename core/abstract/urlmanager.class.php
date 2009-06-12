@@ -6,6 +6,9 @@ class AUrlManager
 	public static function ProcessRequest()
 	{
 		self::ParseUri();
+		
+		if (count(self::$url) == 0) return array('ajax' => false);
+		
 		if (!self::ParseLanguage()) return array('ajax' => false);
 		if (!self::ParseManagerPart()) return array('ajax' => false);
 		if (self::IsAjaxRequest())
@@ -17,6 +20,8 @@ class AUrlManager
 
 	protected static function ParseUri()
 	{
+		if (!isset($_SERVER['REDIRECT_URL'])) return;
+		
 		$url = str_replace(str_replace($_SERVER['DOCUMENT_ROOT'], '', ROOT), '', $_SERVER['REDIRECT_URL']);
 		if (strlen($url) > 1)
 		$url = trim($url, '/');
@@ -44,6 +49,7 @@ class AUrlManager
 		if (self::$url[0] == "manager")
 		{
 			Core::$main_folder = "/manager";
+			define("MANAGED", true);
 			array_splice(self::$url, 0, 1);
 		}
 		else if (Core::$config['status']=='off' && !isset($_SESSION['manager_name']))

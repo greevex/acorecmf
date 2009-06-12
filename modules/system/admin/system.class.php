@@ -109,7 +109,11 @@ class System extends AModule {
 		$modules = scandir($dir);
 		foreach ($modules as $i => $mod){
 			if (!is_dir($dir . $mod) || $mod{0} == "." || $mod == "system") continue;
-			$mod = &Core::GetModule(str_replace('.class.php', '', $mod));
+			try {
+				$mod = &Core::GetModule(str_replace('.class.php', '', $mod));
+			} catch (Exception $ex){
+				continue;
+			}
 			if ($mod->mod_name !== null){
 				$res .= "<h1 class=\"menusection\">{$mod->mod_name}</h1><ul class=\"menusection\">";
 				foreach ($mod->pages as $page){
@@ -357,26 +361,26 @@ class System extends AModule {
 		$res = array('content' => '');
 
 		$files = scandir(ROOT . "/modules/");
-		$modules = array("system");
+		$modules = array("system" => &$this);
 		foreach ($files as $file){
 			if (!is_dir(ROOT . "/modules/" . $file) || $file{0} == "." || $file == "system") continue;
 			try {
 				if (Core::GetModule($file)->mod_name !== null){
-					$modules[] = $file;
+					$modules[$file] = &Core::GetModule($file);
 				}
 			} catch (Exception $e){ }
 		}
 
 		$checkboxes = "";
-		foreach ($modules as $mod){
-			$block = OutBlock::Block(Core::GetModule($mod)->mod_name . " (страницы):");
-			foreach (Core::GetModule($mod)->pages as $page){
-				$block->add(OutCheck::Box($mod . '|' . $page[0], $page[1]));
+		foreach ($modules as $name => $mod){
+			$block = OutBlock::Block($mod->mod_name . " (страницы):");
+			foreach ($mod->pages as $page){
+				$block->add(OutCheck::Box($name . '|' . $page[0], $page[1]));
 			}
 			$checkboxes .= $block;
-			$block = OutBlock::Block(Core::GetModule($mod)->mod_name . " (действия):");
-			foreach (Core::GetModule($mod)->events as $event){
-				$block->add(OutCheck::Box($mod . '|' . $event[0], $event[1]));
+			$block = OutBlock::Block($mod->mod_name . " (действия):");
+			foreach ($mod->events as $event){
+				$block->add(OutCheck::Box($name . '|' . $event[0], $event[1]));
 			}
 			$checkboxes .= $block;
 		}

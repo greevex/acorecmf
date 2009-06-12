@@ -59,7 +59,7 @@ class ATpl {
 		return $content;
 	}
 	
-	private function IncludePHP($file){
+	private static function IncludePHP($file){
 		ob_start();
 		include($file);
 		$content = ob_get_contents();

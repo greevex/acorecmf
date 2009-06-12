@@ -37,13 +37,18 @@ class ACore {
 		if (!isset(self::$modules[$mod])){
 			if (!is_file(ROOT . "/modules/{$mod}/{$mod}.php")) throw new Exception("Не найден модуль `{$mod}`!");
 			require(ROOT . "/modules/{$mod}/{$mod}.php");
-			if (!class_exists($mod)) throw new Exception("Класс `{$mod}` не определен!");
+			try {
+				if (!class_exists($mod)) throw new Exception("Не найден модуль `{$mod}`!");
+			} catch (Exception $ex){
+				 throw new Exception("Не найден модуль `{$mod}`!");
+			}
 			self::$modules[$mod] = new $mod();
 		}
 		return self::$modules[$mod];
 	}
 
 	public static function GetConst($name){
+		if (!isset(self::$data[$name])) return htmlspecialchars("<{{$name}}>");
 		return is_array(self::$data[$name]) ? self::$data[$name][self::$language] : self::$data[$name];
 	}
 

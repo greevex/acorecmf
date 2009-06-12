@@ -6,6 +6,7 @@
  */
 session_start();
 define("ROOT", str_replace("/index.php", "", $_SERVER['SCRIPT_FILENAME']));
-include_once("./core/autoload.php");
+include_once("./core/system/extensions.php");
+include_once("./core/system/autoload.php");
 Core::Run();
 ?>
