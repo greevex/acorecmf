@@ -1,8 +1,5 @@
 <?php
 class ACore {
-	
-	public static $request;
-	public static $session;
 
 	public static $data = array();
 	public static $config = null;
