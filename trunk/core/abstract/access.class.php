@@ -4,11 +4,12 @@
  */
 class AAccess {
 	public static function Create($mod, $mod_name) {
+		$session = HttpSession::GetSession();
 		$config = Config::Load("system", "system");
-		if (session_is_registered("manager_name") && isset ($config['managers'][$_SESSION['manager_name']])) {
-			$login = $_SESSION['manager_name'];
+		if (isset($session['manager_name']) && isset ($config['managers'][$session['manager_name']])) {
+			$login = $session['manager_name'];
 		} else {
-			session_unregister("manager_name");
+			unset($session['manager_name']);
 			return array ();
 		}
 		$access = array ();
