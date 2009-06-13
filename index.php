@@ -5,7 +5,7 @@
  * @author Кваст Александр Владимирович <axel.90@inbox.ru>
  */
 define("ROOT", str_replace("/index.php", "", $_SERVER['SCRIPT_FILENAME']));
-include_once("./core/system/extensions.php");
-include_once("./core/system/autoload.php");
+include("./core/system/extensions.php");
+include("./core/system/autoload.php");
 Core::Run();
 ?>
