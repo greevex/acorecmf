@@ -22,5 +22,10 @@ function setGlobalMod(){
 		}
 		unset($url[count($url) - 1]);
 	}
+	$now = "";
+	if (isset($globs[$now])){
+		define("GLOBAL_MOD", $globs[$now]);
+		require(ROOT . "/modules/{$globs[$now]}/{$globs[$now]}.php");
+	}
 }
 ?>
