@@ -7,24 +7,7 @@ Hello world!<br>
 Гр гр гр. :)asd
 <#_bottom#>
 <br>
-<?
-echo count(PDO::getAvailableDrivers()) . "<br>";
-foreach(PDO::getAvailableDrivers() as $driver){
-	echo $driver.'<br>';
-}
-try {
-   $dbh = new PDO('mysql:host=localhost;dbname=acore', 'root', '');
-   //$dbh = new PDO('pgsql:host=localhost port=5432 dbname=test user=root password=pass');
-   //$dbh->exec("INSERT INTO test (name, text) VALUES('Test3', 'Hello all!')");
-   foreach ($dbh->query("SELECT * FROM test", PDO::FETCH_ASSOC) as $row) {
-      echo $row['text'] . "<br>";
-   }
-   $dbh = null;
-} catch (PDOException $e) {
-   print "Error!: " . $e->getMessage() . "<br/>";
-   die();
-}
-?>
+<+system getLangs separator= | +>
 <h1><*test test*></h1>
 <br>
 Генерация: <[generate_time]>сек.
