@@ -1,6 +1,5 @@
 <?php
 function setGlobalMod(){
-	if (!isset($_SERVER['REDIRECT_URL'])) return;
 	
 	$url = explode("/", substr(str_replace(str_replace($_SERVER['DOCUMENT_ROOT'], '', ROOT), '', $_SERVER['REDIRECT_URL']), 1));
 	if (count($url) == 0) return;
