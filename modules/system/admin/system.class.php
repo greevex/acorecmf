@@ -38,11 +38,13 @@ class System extends AModule {
 
 		$this->AddPage("tplsPage", "Шаблоны", "часто используемые блоки");
 		$this->AddEvent("editTpls", "Редактирование шаблонов");
+		
+		$session = HttpSession::GetSession();
 
-		if (session_is_registered("manager_name") && isset($this->config['managers'][$_SESSION['manager_name']])){
-			$this->data['manager_name'] = $this->login = $_SESSION['manager_name'];
+		if (isset($session['manager_name']) && isset($this->config['managers'][$session['manager_name']])){
+			$this->data['manager_name'] = $this->login = $session['manager_name'];
 		} else {
-			session_unregister("manager_name");
+			unset($session["manager_name"]);
 			return;
 		}
 
@@ -73,8 +75,9 @@ class System extends AModule {
 			$res['res'] = "err";
 		} else {
 			$res['res'] = "entered";
-			$_SESSION['manager_name'] = $_POST['login'];
-			$res['alert'] = $_SESSION['manager_name'];
+			$session = HttpSession::GetSession();
+			$session['manager_name'] = $_POST['login'];
+			$res['alert'] = $session['manager_name'];
 		}
 		return $res;
 	}
