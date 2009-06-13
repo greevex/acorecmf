@@ -7,5 +7,7 @@
 define("ROOT", str_replace("/index.php", "", $_SERVER['SCRIPT_FILENAME']));
 include("./core/system/extensions.php");
 include("./core/system/autoload.php");
+include("./core/system/global_mod.php");
+setGlobalMod();
 Core::Run();
 ?>

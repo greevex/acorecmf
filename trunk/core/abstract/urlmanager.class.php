@@ -22,7 +22,7 @@ class AUrlManager
 	{
 		if (!isset($_SERVER['REDIRECT_URL'])) return;
 		
-		$url = str_replace(str_replace($_SERVER['DOCUMENT_ROOT'], '', ROOT), '', $_SERVER['REDIRECT_URL']);
+		$url = str_replace(str_replace($_SERVER['DOCUMENT_ROOT'], '', ROOT) . (defined("GLOBAL_STR") ? GLOBAL_STR : ''), '', $_SERVER['REDIRECT_URL']);
 		if (strlen($url) > 1)
 		$url = trim($url, '/');
 
