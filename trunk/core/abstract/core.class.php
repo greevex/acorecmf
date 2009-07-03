@@ -59,7 +59,7 @@ class ACore {
 	}
 
 	private static function Out(){
-		$result = preg_replace("/<\[generate_time\]>/",
+		$result = str_replace("<[generate_time]>",
 		(int)((microtime() - self::$generate_start_time) * 10000) / 10000,
 		Tpl::Get(self::$page, true));
 		Tpl::SaveCached();
