@@ -40,7 +40,8 @@ class ATpl {
 
 	private static function Load($tpl, &$filename = null, &$php = null){
 		$content = "";
-		$type = $tpl[0] == "_" ? "/tpls/" : "/pages/";
+		$tpl_path = explode("/", $tpl);
+		$type = $tpl_path[count($tpl_path) - 1]{0} == "_" ? "/tpls/" : "/pages/";
 		if (is_file(ROOT . Core::$main_folder . $type . $tpl . "." . Core::$language . ".php")){
 			$php = true;
 			return self::IncludePHP(ROOT . Core::$main_folder . $type . $tpl . "." . Core::$language . ".php");

@@ -16,7 +16,7 @@ function setGlobalMod(){
 			}
 			define("GLOBAL_STR", $now);
 			define("GLOBAL_MOD", $globs[$now]);
-			require(ROOT . "/modules/{$globs[$now]}/{$globs[$now]}.php");
+			include(ROOT . "/modules/{$globs[$now]}/{$globs[$now]}.php");
 			return;
 		}
 		unset($url[count($url) - 1]);
@@ -24,7 +24,7 @@ function setGlobalMod(){
 	$now = "";
 	if (isset($globs[$now])){
 		define("GLOBAL_MOD", $globs[$now]);
-		require(ROOT . "/modules/{$globs[$now]}/{$globs[$now]}.php");
+		include(ROOT . "/modules/{$globs[$now]}/{$globs[$now]}.php");
 	}
 }
 ?>
