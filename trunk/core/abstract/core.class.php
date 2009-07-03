@@ -1,4 +1,5 @@
 <?php
+
 class ACore {
 
 	public static $data = array();
@@ -43,6 +44,8 @@ class ACore {
 				 throw new Exception("Не найден модуль `{$mod}`!");
 			}
 			self::$modules[$mod] = new $mod();
+			
+			Events::EvalEvent('core', 'AddModule', array('mod' => $mod));
 		}
 		return self::$modules[$mod];
 	}
@@ -56,11 +59,14 @@ class ACore {
 	}
 
 	private static function Out(){
-		echo preg_replace("/<\[generate_time\]>/",
+		$result = preg_replace("/<\[generate_time\]>/",
 		(int)((microtime() - self::$generate_start_time) * 10000) / 10000,
 		Tpl::Get(self::$page, true));
 		Tpl::SaveCached();
-		return;
+		
+		Events::EvalEvent('core', 'Out', array('result' => &$result));
+		
+		echo $result;
 	}
 
 	private static function AjaxOut(){
@@ -85,8 +91,9 @@ class ACore {
 			return $res . substr($pref, 0, -1) . ")";
 		}
 	}
+	
 	public static function decode($file){
 		return include($file);
 	}
+	
 }
-?>
