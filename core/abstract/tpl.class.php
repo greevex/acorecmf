@@ -82,6 +82,9 @@ class ATpl {
 
 	private static function toEval($text){
 		$matches = array();
+		while (preg_match("/\n[\t ]+/uiU", $text)) {
+			$text = preg_replace("/\n[\t ]+/uiU", "\n", $text);
+		}
 		while(true){
 			if (preg_match("/<:(.+):>/uiU", $text, $matches)){
 				$text = str_replace($matches[0], "<? Core::GetModule('{$matches[1]}'); ?>", $text);
