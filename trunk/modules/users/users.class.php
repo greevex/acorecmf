@@ -33,6 +33,7 @@ class Users {
 				if (isset($this->session['user_id'])) $this->Quit();
 				break;
 			case 'register':
+				if (!isset($this->session['user_id'])) $this->Register();
 				break;
 			default:
 				break;
@@ -45,10 +46,10 @@ class Users {
 	public function Enter(){
 		$vars = array();
 		foreach ($this->config['enter_by'] as $name => $func) {
+			$vars[] = trim($_POST[$name]);
 			if ($func !== null){
-				$_POST[$name] = $func($_POST[$name]);
+				$vars[count($vars) - 1] = $func($vars[count($vars) - 1]);
 			}
-			$vars[] = $_POST[$name];
 		}
 		
 		$result = DB::GetPDO()->prepare("SELECT * FROM " . DB::GetPref() . "users WHERE " . implode(" = ? AND ", array_keys($this->config['enter_by'])) . " = ? LIMIT 1");
@@ -75,6 +76,38 @@ class Users {
 		$this->user_id = 0;
 		
 		Events::EvalEvent("users", "Quit");
+	}
+	
+	/**
+	 * Функция регистрации
+	 */
+	public function Register(){
+		$vars = array();
+		$query = "";
+		foreach ($this->config['register_by'] as $name => $params) {
+			$query .= ($query != "" ? ", " : "") . "?";
+			if ($params[0] !== null && !preg_match($params[0], $_POST[$name])){
+				$this->data['register_result'] = $params[1];
+				
+				Events::EvalEvent("users", "RegisterFail");
+				return;
+			}
+			$vars[] = $_POST[$name];
+			if ($params[2] !== null){
+				$vars[count($vars) - 1] = $params[2]($vars[count($vars) - 1]);
+			}
+		}
+		
+		$result = DB::GetPDO()->prepare("INSERT INTO " . DB::GetPref() . "users (" . implode(", ", array_keys($this->config['register_by'])) . ") VALUES ({$query})");
+		$result->execute($vars);
+		
+		if ($result->errorCode() != 0){
+			$this->data['register_result'] = "Такой пользователь уже существует!";
+			Events::EvalEvent("users", "RegisterFail");
+		} else {
+			$this->data['register_result'] = "Вы успешно зарегистрировались!";
+			Events::EvalEvent("users", "RegisterComplite");
+		}
 	}
 
 	/**

@@ -11,6 +11,9 @@ class Core extends ACore {
 		print_r(HttpRequest::GetCookies());
 		echo '</pre>';
 		
+		echo $cookie->GetValue();
+		echo "<br><br>\n";
+		
 		echo "Переопределение работает!";
 	}
 }
