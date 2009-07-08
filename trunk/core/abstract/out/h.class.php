@@ -1,4 +1,7 @@
-<?
+<?php
+/**
+ * @author Кваст Александр Владимирович aka Alehandr
+ */
 class OutH extends AOut {
 	
 	public function __construct($settings = null)
@@ -6,6 +9,10 @@ class OutH extends AOut {
 		if ($settings != null) parent::__construct($settings);
 	}
 	
+	/**
+	 * @param $text
+	 * @return OutH
+	 */
 	public static function H($text){
 		return new OutH(array('text' => $text));
 	}
@@ -15,4 +22,3 @@ class OutH extends AOut {
 	}
 	
 }
-?>

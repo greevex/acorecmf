@@ -1,6 +1,6 @@
-<?
+<?php
 /**
- * @author Кваст Александр Владимирович
+ * @author Кваст Александр Владимирович aka Alehandr
  */
 class OutForm extends AOutContainer {
 	
@@ -16,6 +16,13 @@ class OutForm extends AOutContainer {
 		if ($settings != null) parent::__construct($settings);
 	}
 	
+	/**
+	 * @param $text
+	 * @param $module
+	 * @param $function
+	 * @param $files
+	 * @return OutForm
+	 */
 	public static function Form($text, $module, $function, $files = false){
 		return new OutForm(array('text' => $text, 'module' => $module, 'function' => $function, 'files' => $files));
 	}
@@ -30,4 +37,3 @@ class OutForm extends AOutContainer {
 	}
 	
 }
-?>

@@ -1,8 +1,6 @@
 <?php
 /**
- * Класс загрузки языковых констант
- * 
- * @author Кваст Александр Владимирович
+ * @author Кваст Александр Владимирович aka Alehandr
  */
 class ALang {
 	public static function Load($module_name){

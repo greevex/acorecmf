@@ -86,4 +86,3 @@ class AUrlManager
 		die("Страница не найдена!");
 	}
 }
-?>

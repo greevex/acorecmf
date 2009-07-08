@@ -653,6 +653,10 @@ class System extends AModule {
 			}
 		}
 	}
+	
+	public function ajax_tplsPage(){
+		return array('content' => 'В разработке!');
+	}
 
 }
 ?>

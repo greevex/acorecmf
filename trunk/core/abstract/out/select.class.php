@@ -1,6 +1,6 @@
-<?
+<?php
 /**
- * @author Кваст Александр Владимирович
+ * @author Кваст Александр Владимирович aka Alehandr
  */
 class OutSelect extends AOutContainer {
 	
@@ -9,10 +9,21 @@ class OutSelect extends AOutContainer {
 		if ($settings != null) parent::__construct($settings);
 	}
 	
+	/**
+	 * @param $name
+	 * @param $text
+	 * @param $info
+	 * @return OutSelect
+	 */
 	public static function Select($name, $text, $info= null){
 		return new OutSelect(array('name' => $name, 'text' => $text, 'info' => $info));
 	}
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see abstract/AOutContainer#add()
+	 * @return OutSelect
+	 */
 	public function add($value, $text, $selected = false){
 		$this->innerHTML .= "<option value=\"{$value}\"" .
 		($selected == true ? " selected" : "") . ">{$text}</option>";

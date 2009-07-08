@@ -1,21 +1,29 @@
-<?
+<?php
 /**
- * @author Кваст Александр Владимирович
+ * @author Кваст Александр Владимирович aka Alehandr
  */
 class OutTable extends AOutContainer {
 
 	public $array = array('th' => array(), 'table' => array());
-	
+
 	public function __construct($settings = null)
 	{
 		if ($settings != null) parent::__construct($settings);
 	}
 
+	/**
+	 * @param $text
+	 * @param $table_name
+	 * @return OutTable
+	 */
 	public static function Table($text, $table_name)
 	{
 		return new OutTable(array('text' => $text, 'table_name' => $table_name));
 	}
-	
+
+	/**
+	 * @return OutTable
+	 */
 	public function setTh(){
 		if (func_num_args() == 1 && is_array(func_get_arg(0))){
 			$this->array['th'] = func_get_arg(0);
@@ -27,7 +35,11 @@ class OutTable extends AOutContainer {
 		}
 		return $this;
 	}
-	
+
+	/**
+	 * @param $array
+	 * @return OutTable
+	 */
 	public function setArray($array)
 	{
 		$this->array['table'] = $array;
@@ -48,4 +60,3 @@ class OutTable extends AOutContainer {
 	}
 
 }
-?>

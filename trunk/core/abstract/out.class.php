@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Кваст Александр Владимирович
+ * @author Кваст Александр Владимирович aka Alehandr
  */
 abstract class AOut {
 	protected $settings = array();
@@ -25,4 +25,3 @@ abstract class AOut {
 
 	abstract public function __toString();
 }
-?>

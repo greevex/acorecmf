@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Кваст Александр Владимирович
+ * @author Кваст Александр Владимирович aka Alehandr
  */
 abstract class AModule {
 	public $mod_name = null;
@@ -41,4 +41,3 @@ abstract class AModule {
 	}
 	
 }
-?>
