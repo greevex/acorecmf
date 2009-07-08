@@ -39,6 +39,9 @@ class System extends AModule {
 		$this->AddPage("tplsPage", "Шаблоны", "часто используемые блоки");
 		$this->AddEvent("editTpls", "Редактирование шаблонов");
 		
+		$this->AddPage("globsPage", "Глобальные модули", "расширение возможностей CMF");
+		$this->AddEvent("editGlobs", "Редактирование списка гл.модулей");
+		
 		$session = HttpSession::GetSession();
 
 		if (isset($session['manager_name']) && isset($this->config['managers'][$session['manager_name']])){
@@ -657,6 +660,65 @@ class System extends AModule {
 	public function ajax_tplsPage(){
 		return array('content' => 'В разработке!');
 	}
+	
+	/**
+	 * Страница глобальных модулей
+	 * @return array
+	 */
+	public function ajax_globsPage(){
+		if (!$this->Access('globsPage')) return array('err' => true);
+		$res = array('content' => '');
+		
+		$globs = AConfig::Load('global');
+		
+		$arr = array();
+		foreach ($globs as $path => $mod){
+			if ($path == "") $path = "<b>корень</b>";
+			if ($mod == "") $mod = "<b>без переопределения</b>";
+			$arr[] = array($path, $mod, OutLink::Ajax('system', 'delGlobs', 'удалить', 'Удалить?', array('path' => $path)));
+		}
+		
+		$res['content'] .= OutTable::Table('Переопределения:', 'system|globs')
+		->setTh('Путь:', 'Модуль:', '')->setArray($arr);
+		
+		$res['content'] .= OutForm::Form('Добавить (изменить) переопределение:', 'system', 'addGlobs')
+		->add(OutInput::Text('path', 'Путь:'))
+		->add(OutInput::Text('module', 'Модуль:'))
+		->add(OutInput::Submit(null, 'Добавить / Изменить'));
+		
+		return $res;
+	}
+	
+	/**
+	 * Удаление переопределений
+	 * 
+	 * @return array
+	 */
+	public function ajax_delGlobs(){
+		if (!$this->Access('globsPage', 'editGlobs')) return array('err' => true);
+		
+		$globs = AConfig::Load('global');
+		unset($globs[$_POST['path']]);
+		
+		AConfig::Save('global', $globs);
+		
+		return array('res' => 'Удалено!', 'reload' => 'true');
+	}
+	
+	/**
+	 * Добавление (редактирование) переопределений
+	 * 
+	 * @return array
+	 */
+	public function ajax_addGlobs(){
+		if (!$this->Access('globsPage', 'editGlobs')) return array('err' => true);
+		
+		$globs = AConfig::Load('global');
+		$globs[$_POST['path']] = $_POST['module'];
+		
+		AConfig::Save('global', $globs);
+		
+		return array('res' => 'Сохранено!', 'reload' => 'true');
+	}
 
 }
-?>

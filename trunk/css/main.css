@@ -54,3 +54,9 @@ input {
 	border-right: 230px solid #ccc;
 	padding: 20px;
 }
+
+.b-main h1 {
+	color: #3a4;
+	font-size: 16px;
+	margin: 2px 2px 2px 10px;
+}
