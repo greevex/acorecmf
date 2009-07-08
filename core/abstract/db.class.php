@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author Кваст Александр Владимирович aka Alehandr
+ */
 class ADB {
 	
 	public static $config = null;
@@ -54,4 +57,3 @@ class ADB {
 	}
 	
 }
-?>

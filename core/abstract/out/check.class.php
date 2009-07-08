@@ -1,6 +1,6 @@
-<?
+<?php
 /**
- * @author Кваст Александр Владимирович
+ * @author Кваст Александр Владимирович aka Alehandr
  */
 class OutCheck extends AOutContainer {
 	
@@ -9,6 +9,13 @@ class OutCheck extends AOutContainer {
 		if ($settings != null) parent::__construct($settings);
 	}
 	
+	/**
+	 * @param $name
+	 * @param $text
+	 * @param $checked
+	 * @param $info
+	 * @return OutCheck
+	 */
 	public static function Box($name, $text, $checked = false, $info = null){
 		return new OutCheck(array('name' => $name, 'text' => $text, 'checked' => $checked, 'info' => $info));
 	}
@@ -22,4 +29,3 @@ class OutCheck extends AOutContainer {
 	}
 	
 }
-?>

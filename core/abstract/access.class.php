@@ -1,8 +1,13 @@
 <?php
 /**
- * @author Кваст Александр Владимирович
+ * @author Кваст Александр Владимирович aka Alehandr
  */
 class AAccess {
+	/**
+	 * @param $mod
+	 * @param $mod_name
+	 * @return array
+	 */
 	public static function Create($mod, $mod_name) {
 		$session = HttpSession::GetSession();
 		$config = Config::Load("system", "system");
@@ -40,4 +45,3 @@ class AAccess {
 		return $access;
 	}
 }
-?>

@@ -229,6 +229,15 @@ div.b-mmenu a:hover {
 	background: #fff;
 }
 
+div.b-array {
+	text-align: left;
+}
+
+div.b-array b {
+	font-weight: normal;
+	color: green;
+}
+
 form div {
 	margin: 5px 2px 5px 2px;
 }

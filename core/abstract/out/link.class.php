@@ -1,4 +1,7 @@
-<?
+<?php
+/**
+ * @author Кваст Александр Владимирович aka Alehandr
+ */
 class OutLink extends AOut {
 
 	public function __construct($settings = null)
@@ -6,11 +9,27 @@ class OutLink extends AOut {
 		if ($settings != null) parent::__construct($settings);
 	}
 	
+	/**
+	 * @param $module
+	 * @param $function
+	 * @param $text
+	 * @param $module_text
+	 * @param $params
+	 * @return OutLink
+	 */
 	public static function Module($module, $function, $text, $module_text = null,  $params = array()){
 		if ($module_text == null) $module_text = $text;
 		return new OutLink(array('type' => 'module', 'module' => $module, 'function' => $function, 'text' => $text, 'module_text' => $module_text, 'params' => $params));
 	}
 	
+	/**
+	 * @param $module
+	 * @param $function
+	 * @param $text
+	 * @param $confirm
+	 * @param $params
+	 * @return OutLink
+	 */
 	public static function Ajax($module, $function, $text, $confirm = null, $params = array()){
 		return new OutLink(array('type' => 'ajax', 'module' => $module, 'function' => $function, 'text' => $text, 'confirm' => $confirm, 'params' => $params));
 	}
@@ -45,4 +64,3 @@ class OutLink extends AOut {
 	}
 
 }
-?>

@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author Кваст Александр Владимирович aka Alehandr
+ */
 class ATpl {
 
 	public static $tpls;
@@ -175,4 +178,3 @@ class ATpl {
 	}
 
 }
-?>

@@ -1,6 +1,6 @@
-<?
+<?php
 /**
- * @author Кваст Александр Владимирович
+ * @author Кваст Александр Владимирович aka Alehandr
  */
 class OutTextarea extends AOut {
 
@@ -9,6 +9,14 @@ class OutTextarea extends AOut {
 		if ($settings != null) parent::__construct($settings);
 	}
 
+	/**
+	 * @param $name
+	 * @param $text
+	 * @param $info
+	 * @param $value
+	 * @param $notnull
+	 * @return OutTextarea
+	 */
 	public static function Textarea($name, $text, $info, $value = '', $notnull = null)
 	{
 		return new OutTextarea(array('text' => $text, 'info' => $info, 'name' => $name, 'value' => $value, 'notnull' => $notnull));
@@ -23,4 +31,3 @@ class OutTextarea extends AOut {
 	}
 	
 }
-?>

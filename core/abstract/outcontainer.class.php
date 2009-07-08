@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Кваст Александр Владимирович
+ * @author Кваст Александр Владимирович aka Alehandr
  */
 abstract class AOutContainer extends AOut {
 	protected $innerHTML = "";
@@ -18,4 +18,3 @@ abstract class AOutContainer extends AOut {
 		return $this;
 	}
 }
-?>

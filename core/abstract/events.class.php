@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Кваст Александр Владимирович aka Alehandr
+ */
 class AEvents {
 	
 	public static $reserved = array();

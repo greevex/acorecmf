@@ -47,7 +47,7 @@ class Users {
 		$vars = array();
 		foreach ($this->config['enter_by'] as $name => $func) {
 			$vars[] = trim($_POST[$name]);
-			if ($func !== null){
+			if ($func != ''){
 				$vars[count($vars) - 1] = $func($vars[count($vars) - 1]);
 			}
 		}
@@ -64,6 +64,7 @@ class Users {
 			
 			Events::EvalEvent("users", "EnterComplite");
 		} else {
+			$this->data['enter_result'] = $this->config['enter_error'];
 			Events::EvalEvent("users", "EnterFail");
 		}
 	}
@@ -93,7 +94,7 @@ class Users {
 				return;
 			}
 			$vars[] = $_POST[$name];
-			if ($params[2] !== null){
+			if ($params[2] != ''){
 				$vars[count($vars) - 1] = $params[2]($vars[count($vars) - 1]);
 			}
 		}
@@ -102,10 +103,10 @@ class Users {
 		$result->execute($vars);
 		
 		if ($result->errorCode() != 0){
-			$this->data['register_result'] = "Такой пользователь уже существует!";
+			$this->data['register_result'] = $this->config['register_error'];
 			Events::EvalEvent("users", "RegisterFail");
 		} else {
-			$this->data['register_result'] = "Вы успешно зарегистрировались!";
+			$this->data['register_result'] = $this->config['register_complite'];
 			Events::EvalEvent("users", "RegisterComplite");
 		}
 	}

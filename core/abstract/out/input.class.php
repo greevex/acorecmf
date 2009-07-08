@@ -17,11 +17,24 @@ class OutInput extends AOut {
 		if ($settings != null) parent::__construct($settings);
 	}
 
+	/**
+	 * @param $name
+	 * @param $value
+	 * @return OutInput
+	 */
 	public static function Hidden($name, $value)
 	{
 		return new OutInput(array('type' => 'hidden', 'name' => $name, 'value' => $value));
 	}
 
+	/**
+	 * @param $name
+	 * @param $text
+	 * @param $info
+	 * @param $value
+	 * @param $notnull
+	 * @return OutInput
+	 */
 	public static function Text($name, $text, $info = null, $value = null, $notnull = null)
 	{
 		return new OutInput(array('type' => 'text', 'text' => $text, 'info' => $info, 'name' => $name, 'value' => $value, 'notnull' => $notnull));
@@ -35,11 +48,24 @@ class OutInput extends AOut {
 		return $res;
 	}
 	
+	/**
+	 * @param $name
+	 * @param $text
+	 * @param $info
+	 * @param $notnull
+	 * @return OutInput
+	 */
 	public static function File($name, $text, $info = null, $notnull = null)
 	{
 		return new OutInput(array('type' => 'file', 'text' => $text, 'info' => $info, 'name' => $name, 'notnull' => $notnull));
 	}
 
+	/**
+	 * @param $name
+	 * @param $value
+	 * @param $confirm
+	 * @return OutInput
+	 */
 	public static function Submit($name, $value, $confirm = null)
 	{
 		return new OutInput(array('type' => 'submit', 'name' => $name, 'value' => $value, 'confirm' => $confirm));
@@ -64,4 +90,3 @@ class OutInput extends AOut {
 	}
 	
 }
-?>
