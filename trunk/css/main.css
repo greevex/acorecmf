@@ -16,6 +16,9 @@ body {
 
 input {
 	margin: 1px;
+	border: 1px solid #ddd;
+	border-top: 2px solid #ccc;
+	width: 100%;
 }
 
 /*  */
@@ -40,18 +43,18 @@ input {
 
 .b-container {
 	overflow: hidden;
-	background: #f0f0f0;
+	/*background: #f0f0f0;*/
 }
 
 .b-menu {
 	float: right;
 	width: 200px;
-	background: #ccc;
+	border-left: 1px dotted #ccc;
 	padding: 15px;
 }
 
 .b-main {
-	border-right: 230px solid #ccc;
+	margin-right: 230px;
 	padding: 20px;
 }
 
@@ -59,4 +62,30 @@ input {
 	color: #3a4;
 	font-size: 16px;
 	margin: 2px 2px 2px 10px;
+}
+
+/*  */
+
+.b-news {
+	border-bottom: 1px dotted #ccc;
+}
+
+.b-news-sep {
+	border-top: 1px solid #fff;
+}
+
+.b-news h1 {
+	font-size: 14px;
+	color: #66a;
+	margin: 10px;
+}
+
+.b-news h1 b {
+	font-weight: normal;
+	color: #7a3;
+}
+
+.b-news h2 {
+	padding: 5px 50px 5px 50px;
+	color: #555;
 }
