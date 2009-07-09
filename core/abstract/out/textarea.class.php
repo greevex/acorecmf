@@ -17,9 +17,17 @@ class OutTextarea extends AOut {
 	 * @param $notnull
 	 * @return OutTextarea
 	 */
-	public static function Textarea($name, $text, $info, $value = '', $notnull = null)
+	public static function Textarea($name, $text, $info = null, $value = '', $notnull = null)
 	{
 		return new OutTextarea(array('text' => $text, 'info' => $info, 'name' => $name, 'value' => $value, 'notnull' => $notnull));
+	}
+	
+	public static function MLTextarea($name, $text, $info = null, $value = '', $notnull = null)
+	{
+		$res = "";
+		foreach (Core::$config['languages'] as $pref => $language)
+		$res .= new OutTextarea(array('text' => "[{$language}] ".$text, 'info' => $info, 'name' => $name . "[{$pref}]", 'value' => (is_array($value) ? $value[$pref] : ''), 'notnull' => $notnull));
+		return $res;
 	}
 
 	public function __toString()

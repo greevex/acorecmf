@@ -3,15 +3,15 @@
  * AHttpSession class.
  * @package core
  * @author Naumov Vasiliy aka glock18, SilentWalk. mailto: wnaumov@gmail.com
- * 
+ *
  * Gives session object oriented implementation.
  *
  */
 class AHttpSession implements IteratorAggregate, ArrayAccess
 {
 	/**
-	* @var boolean Whether the session is already started
-	*/
+	 * @var boolean Whether the session is already started
+	 */
 	protected $sessionOpened = false;
 
 	/**
@@ -29,7 +29,7 @@ class AHttpSession implements IteratorAggregate, ArrayAccess
 		global $_SESSION;
 		$this->session = &$_SESSION;
 	}
-	
+
 	private static $object = null;
 	public static function GetSession(){
 		if (self::$object === null){
@@ -52,12 +52,12 @@ class AHttpSession implements IteratorAggregate, ArrayAccess
 	}
 
 	/**
-    	 * ArrayAccess abstract methods. 
-    	 * This one checks whether an offset is set.
-    	 *
-    	 * @param string $key Session variable key.
-    	 * @return boolean
-    	 */
+	 * ArrayAccess abstract methods.
+	 * This one checks whether an offset is set.
+	 *
+	 * @param string $key Session variable key.
+	 * @return boolean
+	 */
 	public function offsetExists($key)
 	{
 		if (!$this->sessionOpened)
