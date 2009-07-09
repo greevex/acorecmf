@@ -1,0 +1,18 @@
+
+CREATE TABLE IF NOT EXISTS acore_news (
+  id int(32) NOT NULL auto_increment,
+  `date` date NOT NULL,
+  title text collate utf8_unicode_ci NOT NULL,
+  `text` text collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (id)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS acore_users (
+  id int(32) NOT NULL auto_increment,
+  mail varchar(128) collate utf8_unicode_ci NOT NULL,
+  pass varchar(128) collate utf8_unicode_ci NOT NULL,
+  `name` varchar(128) collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (id),
+  UNIQUE KEY mail (mail)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
