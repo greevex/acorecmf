@@ -1,11 +1,13 @@
 <*users register_result*>
 <form action="" method="POST">
 	<input type="hidden" name="users_action" value="register">
-	Mail:<br>
+	Mail: <*users register_mail_error*><br>
 	<input type="text" name="mail" value="<*_post mail*>"><br>
-	Пароль:<br>
-	<input type="text" name="pass" value="<*_post pass*>"><br>
-	Ваше имя:<br>
+	Пароль: <*users register_pass_error*><br>
+	<input type="password" name="pass" value="<*_post pass*>"><br>
+	Повторите пароль:<br>
+	<input type="password" name="pass2" value="<*_post pass2*>"><br>
+	Ваше имя: <*users register_name_error*><br>
 	<input type="text" name="name" value="<*_post name*>"><br>
 	<input type="submit" value="регистрация">
 </form>

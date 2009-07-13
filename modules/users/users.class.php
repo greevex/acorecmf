@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Кваст Александр Владимирович aka Alehandr
+ */
 class Users {
 
 	public $data = array();
@@ -7,9 +9,8 @@ class Users {
 	private $session;
 	private $cookies;
 	
-	private $user_id = 0;
-	
-	private $config;
+	public $user_id = 0;
+	public $config;
 
 	public function __construct(){
 		$this->config = Config::Load('users', 'users');
@@ -45,6 +46,7 @@ class Users {
 	 */
 	public function Enter(){
 		$vars = array();
+		
 		foreach ($this->config['enter_by'] as $name => $func) {
 			$vars[] = trim($_POST[$name]);
 			if ($func != ''){
@@ -54,6 +56,7 @@ class Users {
 		
 		$result = DB::GetPDO()->prepare("SELECT * FROM " . DB::GetPref() . "users WHERE " . implode(" = ? AND ", array_keys($this->config['enter_by'])) . " = ? LIMIT 1");
 		$result->execute($vars);
+		
 		if ($result->rowCount() == 1){
 			$user = $result->fetch(PDO::FETCH_ASSOC);
 			$this->session['user_id'] = $this->user_id = $user['id'];
@@ -63,10 +66,16 @@ class Users {
 			reset($user);
 			
 			Events::EvalEvent("users", "EnterComplite");
-		} else {
-			$this->data['enter_result'] = $this->config['enter_error'];
-			Events::EvalEvent("users", "EnterFail");
+			return true;
 		}
+		
+		$this->data['enter_result'] = $this->config['enter_error'];
+		Events::EvalEvent("users", "EnterFail");
+		return false;
+	}
+
+	public function ajax_enter(){
+		return array('enter' => $this->Enter(), 'data' => $this->data);
 	}
 	
 	/**
@@ -78,24 +87,36 @@ class Users {
 		
 		Events::EvalEvent("users", "Quit");
 	}
+
+	public function ajax_exit(){
+		$this->Quit();
+		return array();
+	}
 	
 	/**
 	 * Функция регистрации
 	 */
 	public function Register(){
+		
+		$validate = FormValidator::Validate('register', true);
+		if ($validate !== true){
+			$this->data['register_result'] = '';
+			foreach ($validate as $field => $errors){
+				$this->data['register_' . $field . "_error"] = implode('<br>', $errors);
+				if ($this->data['register_result'] != '') $this->data['register_result'] .= "<br>";
+				$this->data['register_result'] .= $this->data[$field . "_error"]; 
+			}
+			Events::EvalEvent("users", "RegisterFail");
+			return false;
+		}
+		
 		$vars = array();
 		$query = "";
-		foreach ($this->config['register_by'] as $name => $params) {
+		foreach ($this->config['register_by'] as $name => $func) {
 			$query .= ($query != "" ? ", " : "") . "?";
-			if ($params[0] !== null && !preg_match($params[0], $_POST[$name])){
-				$this->data['register_result'] = $params[1];
-				
-				Events::EvalEvent("users", "RegisterFail");
-				return;
-			}
 			$vars[] = $_POST[$name];
-			if ($params[2] != ''){
-				$vars[count($vars) - 1] = $params[2]($vars[count($vars) - 1]);
+			if ($func != ''){
+				$vars[count($vars) - 1] = $func($vars[count($vars) - 1]);
 			}
 		}
 		
@@ -105,10 +126,16 @@ class Users {
 		if ($result->errorCode() != 0){
 			$this->data['register_result'] = $this->config['register_error'];
 			Events::EvalEvent("users", "RegisterFail");
-		} else {
-			$this->data['register_result'] = $this->config['register_complite'];
-			Events::EvalEvent("users", "RegisterComplite");
+			return false;
 		}
+		
+		$this->data['register_result'] = $this->config['register_complite'];
+		Events::EvalEvent("users", "RegisterComplite");
+		return true;
+	}
+
+	public function ajax_register(){
+		return array('register' => $this->Register(), 'data' => $this->data);
 	}
 
 	/**
@@ -129,7 +156,7 @@ class Users {
 	}
 	
 	/**
-	 * Шаблоння функция проверки на авторизованность пользователя
+	 * Шаблонная функция проверки на авторизованность пользователя
 	 *
 	 * @param array $data
 	 * @return string

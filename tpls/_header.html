@@ -5,13 +5,42 @@
 		<title><{title}></title>
 		<link rel="stylesheet" href="<{root}>/css/reset.css" type="text/css">
 		<link rel="stylesheet" href="<{root}>/css/main.css" type="text/css">
+		
+		<script language="javascript" src="<{root}>/js/mootools.js"></script>
+		<script language="javascript" src="<{root}>/js/acore.js"></script>
+		<script language="javascript">
+			ROOT = '<{root}>';
+			LANG_ROOT = '<{lang_root}>';
+		</script>
 	</head>
 	<body>
 		<div class="b-top">
-			<h1>Пробник ACore CMF</h1>
+			<h1>ACore CMF</h1>
+			<h2>Официальное сообщество разработчиков</h2>
+			<h3>
+				Здравствуте, <+users isUser true=<*users user_name*>&false=Гость+>!
+				<+users isUser true=<a href="<{lang_root}>/exit/">выйти</a>&false=<a href="<{lang_root}>/enter/">войти</a><a href="<{lang_root}>/register/">регистрация</a>+>
+			</h3>
 		</div>
 		<div class="b-container">
 			<div class="b-menu">
-				<+users isUser true=<#users/_hello#>&false=<#users/_enterform#><br><#users/_registerform#>+>
+				<!-- <+users isUser true=<#users/_hello#>&false=<#users/_enterform#><br><#users/_registerform#>+> -->
+				<h1>Меню:</h1>
+				<ul>
+					<li><a href="<{lang_root}>">Новости</a></li>
+					<li><a href="<{lang_root}>/core/">Скачать движок</a></li>
+					<li><a href="<{lang_root}>/modules/">Скачать модули</a></li>
+					<li><a href="<{lang_root}>/docs/">Документация</a></li>
+					<ul>
+						<li><a href="<{lang_root}>/docs/">Введение</a></li>
+						<li><a href="<{lang_root}>/docs/">Концепция</a></li>
+						<li><a href="<{lang_root}>/docs/">Системные классы</a></li>
+						<li><a href="<{lang_root}>/docs/">Шаблонизатор</a></li>
+						<li><a href="<{lang_root}>/docs/">Глобальные модули</a></li>
+					</ul>
+					<li><a href="<{lang_root}>/example/">Практика</a></li>
+					<li><a href="<{lang_root}>/articles/">Статьи</a></li>
+				</ul>
+				<h1>Облако тегов:</h1>
 			</div>
 			<div class="b-main">

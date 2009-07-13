@@ -3,11 +3,11 @@
 	font-size: 12px;
 	line-height: 18px;
 	font-family: Verdana;
-	color: #333;
+	color: #555;
 }
 
 html, body {
-	background: #f5f5f5;
+	background: #2C2C2C url('../images/bg.jpg');
 }
 
 body {
@@ -24,19 +24,48 @@ input {
 /*  */
 
 .b-top {
-	padding: 15px;
-	background: #444;
+	position: relative;
+	padding: 25px;
 	margin-bottom: 10px;
 }
 
 .b-top h1 {
-	color: #99e;
-	font-size: 20px;
+	color: #FFAE00;
+	font-size: 30px;
+	margin-bottom: 10px;
+}
+
+.b-top h2 {
+	color: #FFF;
+	font-size: 14px;
+}
+
+.b-top h3 {
+	position: absolute;
+	top: 30px;
+	right: 15px;
+	color: #FFF;
+	font-size: 14px;
+}
+
+.b-top h3 a {
+	display: inline-block;
+	padding: 5px 10px 5px 10px;
+	margin-left: 5px;
+	color: #aaf;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+.b-top h3 a:hover {
+	padding: 4px 9px 4px 9px;
+	border: 1px solid #444;
+	background: #222;
+	color: #ddf;
 }
 
 .b-bottom {
 	padding: 15px;
-	background: #444;
 	margin-top: 10px;
 	color: #f5f5f5;
 }
@@ -49,29 +78,87 @@ input {
 .b-menu {
 	float: right;
 	width: 200px;
-	border-left: 1px dotted #ccc;
-	padding: 15px;
+	padding: 0px 15px 0px 15px;
+	color: #fff;
+}
+
+.b-menu ul,
+.b-menu li,
+.b-menu a {
+	color: #fff;
+}
+
+.b-menu h1 {
+	color: #FFAE00;
+	font-size: 16px;
+	margin: 10px 5px 10px -20px; 
+}
+
+.b-menu ul {
+	margin: 10px 0px 20px 0px;
+}
+
+.b-menu ul ul {
+	margin: 2px 0px 2px 20px;
+}
+
+.b-menu ul li a {
+	font-size: 14px;
+	display: block;
+	line-height: 20px;
+	text-decoration: none;
+}
+
+.b-menu ul li a:hover {
+	text-decoration: underline;
+}
+
+.b-menu ul ul li a {
+	font-size: 12px;
+	line-height: 16px;
 }
 
 .b-main {
-	margin-right: 230px;
-	padding: 20px;
+	margin-right: 260px;
+	padding: 20px 30px 20px 30px;
+	background: #f0f0f0;
+	border: 2px solid #fff;
 }
 
 .b-main h1 {
-	color: #3a4;
-	font-size: 16px;
-	margin: 2px 2px 2px 10px;
+	color: #777;
+	font-size: 18px;
+	margin: 2px 2px 20px -10px;
+}
+
+/*  */
+
+.b-user-enter {
+	width: 300px;
+	margin: 15px auto 15px auto;
+}
+
+.b-user-register {
+	width: 400px;
+	margin: 15px auto 15px auto;
+}
+
+.b-user-register b {
+	display: block;
+	margin-left: 15px;
+	font-weight: normal;
+	color: #c44;
 }
 
 /*  */
 
 .b-news {
-	border-bottom: 1px dotted #ccc;
+	
 }
 
 .b-news-sep {
-	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	border-top: 1px dotted #ccc;
 }
 
 .b-news h1 {
@@ -86,6 +173,6 @@ input {
 }
 
 .b-news h2 {
-	padding: 5px 50px 5px 50px;
+	padding: 5px 10px 5px 50px;
 	color: #555;
 }
