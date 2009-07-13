@@ -73,7 +73,6 @@ class ACore {
 		$func = "ajax_" . self::$url[2];
 		$mod = &self::GetModule(self::$url[1]);
 		echo json_encode($mod->$func());
-		return;
 	}
 	
 	public static function encode($array, $pref = "\t"){

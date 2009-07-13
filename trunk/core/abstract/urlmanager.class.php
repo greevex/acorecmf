@@ -22,7 +22,7 @@ class AUrlManager
 	{
 		if (!isset($_SERVER['REDIRECT_URL'])) return;
 		
-		$url = str_replace(str_replace($_SERVER['DOCUMENT_ROOT'], '', ROOT) . (defined("GLOBAL_STR") ? "/" . GLOBAL_STR : ''), '', $_SERVER['REDIRECT_URL']);
+		$url = substr($_SERVER['REDIRECT_URL'], strlen(str_replace($_SERVER['DOCUMENT_ROOT'], '', ROOT) . (defined("GLOBAL_STR") ? "/" . GLOBAL_STR : '')));
 		if (strlen($url) > 1)
 		$url = trim($url, '/');
 
@@ -62,7 +62,7 @@ class AUrlManager
 	protected static function IsAjaxRequest()
 	{
 		if (!isset(self::$url[0])) return false;
-
+		
 		return (self::$url[0] == 'ajax');
 	}
 

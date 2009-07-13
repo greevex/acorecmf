@@ -22,7 +22,7 @@ class AEvents {
 		if (isset(self::$reserved[$class][$event]))
 		foreach (self::$reserved[$class][$event] as $i => $e) {
 			$e['object']->$e['function']($class, $event, &$args);
-			if (!$event['repeat']){
+			if (!$e['repeat']){
 				unset(self::$reserved[$class][$event][$i]);
 			}
 		}

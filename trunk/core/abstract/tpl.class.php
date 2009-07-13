@@ -103,11 +103,11 @@ class ATpl {
 				continue;
 			}
 			if (preg_match("/<\*_post (.+)\*>/uiU", $text, $matches)){
-				$text = str_replace($matches[0], "<?=\$_POST['{$matches[1]}']?>", $text);
+				$text = str_replace($matches[0], "<?=htmlspecialchars(\$_POST['{$matches[1]}'])?>", $text);
 				continue;
 			}
 			if (preg_match("/<\*_get (.+)\*>/uiU", $text, $matches)){
-				$text = str_replace($matches[0], "<?=\$_GET['{$matches[1]}']?>", $text);
+				$text = str_replace($matches[0], "<?=htmlspecialchars(\$_GET['{$matches[1]}'])?>", $text);
 				continue;
 			}
 			if (preg_match("/<\*_url (.+)\*>/uiU", $text, $matches)){
@@ -126,13 +126,8 @@ class ATpl {
 			break;
 		}
 		while(preg_match("/(<\?(?(?<!\?>).)+)<\?=(.+)\?>(.(?(?<!\?>).)+\?>)/smuiU", $text, $matches)){
-			$pos1 = strpos($matches[3], "'");
-			$pos2 = strpos($matches[3], '"');
-			if ($pos1 !== false && ($pos2 === false || $pos1 < $pos2)){
-				$text = str_replace("{$matches[1]}<?={$matches[2]}?>{$matches[3]}", "{$matches[1]}' . {$matches[2]} . '{$matches[3]}", $text);
-			} else {
-				$text = str_replace("{$matches[1]}<?={$matches[2]}?>{$matches[3]}", "{$matches[1]}\" . {$matches[2]} . \"{$matches[3]}", $text);
-			}
+			$text = str_replace("{$matches[1]}<?={$matches[2]}?>{$matches[3]}", "{$matches[1]}' . {$matches[2]} . '{$matches[3]}", $text);
+			continue;
 		}
 		//echo $text . "\n";
 		return '?>' . $text . '<?';

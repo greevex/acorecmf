@@ -1,0 +1,20 @@
+<?php
+if (Core::GetModule('users')->user_id != 0){
+	header('Location: ' . Core::$data['lang_root']);
+	exit();
+}
+?>
+<#_header#>
+	<h1>Вход:</h1>
+	<div class="b-user-enter">
+		<form action="" method="POST">
+			<input type="hidden" name="users_action" value="enter">
+			Mail:<br>
+			<input type="text" name="mail" value="<*_post mail*>"><br>
+			Пароль:<br>
+			<input type="text" name="pass"><br>
+			<input type="submit" value="войти">
+		</form>
+		<*users enter_result*>
+	</div>
+<#_bottom#>
