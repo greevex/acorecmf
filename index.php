@@ -4,6 +4,7 @@
  * @copyright Copyright (C) 2009, AlArta Studio <www.alarta.ru>
  * @author Кваст Александр Владимирович <axel.90@inbox.ru>
  */
+error_reporting(E_ALL);
 define("ROOT", str_replace("/index.php", "", $_SERVER['SCRIPT_FILENAME']));
 include("./core/system/extensions.php");
 include("./core/system/autoload.php");

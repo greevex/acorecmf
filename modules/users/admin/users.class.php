@@ -59,18 +59,16 @@ class Users extends AModule {
 		//Поля для регистрации
 		
 		$registerByTable = OutTable::Table('Регистраиця по полям:', 'users|registre_by')
-		->setTh('Поле:', 'Проверка:', 'Сообщение об ошибке:', 'Функция шифрования:', '');
+		->setTh('Поле:', 'Функция шифрования:', '');
 		
 		$arr = array();
 		foreach ($this->config['register_by'] as $i => $v){
-			$arr[] = array($i, $v[0], OutBlock::Arr($v[1]), $v[2], OutLink::Ajax('users', 'deleteRegisterBy', 'удалить', 'Удалить?', array('field' => $i)));
+			$arr[] = array($i, $v, OutLink::Ajax('users', 'deleteRegisterBy', 'удалить', 'Удалить?', array('field' => $i)));
 		}
 		$registerByTable->setArray($arr);
 		
 		$addForm = OutForm::Form('Добавть (изменить) поле:', 'users', 'addRegisterBy')
 		->add(OutInput::Text('field', 'Поле:', 'должно присутствовать в таблице users базы данных', null, 'Введите имя поля!'))
-		->add(OutInput::Text('regular', 'Проверка:', 'регулярное выражение с обязательным параметром `u`'))
-		->add(OutInput::MLText('error', 'Сообщение об ошибке:', 'сообщение, которое будет возвращено функцией проверки на валидность данных'))
 		->add(OutInput::Text('function', 'Функция шифрования:', 'не обязательно'))
 		->add(OutInput::Submit(null, 'добавить / изменить'));
 		
@@ -128,11 +126,7 @@ class Users extends AModule {
 	public function ajax_addRegisterBy(){
 		if (!$this->Access('optionsPage', 'optionsEdit')) return array("err" => true);
 		
-		$this->config['register_by'][$_POST['field']] = array(
-			$_POST['regular'],
-			$_POST['error'],
-			$_POST['function'],
-		);
+		$this->config['register_by'][$_POST['field']] = $_POST['function'];
 		Config::Save('users', $this->config, 'users');
 		
 		return array('res' => 'Сохранено', 'reload' => true);
@@ -150,9 +144,10 @@ class Users extends AModule {
 		
 		if ($user = $result->fetch(PDO::FETCH_ASSOC)){
 			$th = array_keys($user);
-			$arr[] = array_values($user);
+			$arr[] = array_map('htmlspecialchars', array_values($user));
+			//for($i = 0 ; $i < count($arr[count($arr) - 1]) ; $i++) $arr[count($arr) - 1][$i] = htmlspecialchars($arr[count($arr) - 1][$i]);
 		}
-		while ($user = $result->fetch(PDO::FETCH_NUM)) $arr[] = $user;
+		while ($user = $result->fetch(PDO::FETCH_NUM)) $arr[] = array_map('htmlspecialchars', $user);
 		
 		$res['content'] .= OutTable::Table('Пользователи:', 'users|users')
 		->setTh($th)->setArray($arr); 
