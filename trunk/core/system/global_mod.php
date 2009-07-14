@@ -1,7 +1,7 @@
 <?php
 function setGlobalMod(){
 
-	$url = explode("/", substr(str_replace(str_replace($_SERVER['DOCUMENT_ROOT'], '', ROOT), '', $_SERVER['REDIRECT_URL']), 1));
+	$url = explode("/", substr(str_replace(str_replace($_SERVER['DOCUMENT_ROOT'], '', ROOT), '', isset($_SERVER['REDIRECT_URL']) ? $_SERVER['REDIRECT_URL'] : ""), 1));
 	if (count($url) == 0) return;
 	if ($url[0] == "manager") return;
 

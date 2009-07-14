@@ -103,11 +103,11 @@ class ATpl {
 				continue;
 			}
 			if (preg_match("/<\*_post (.+)\*>/uiU", $text, $matches)){
-				$text = str_replace($matches[0], "<?=htmlspecialchars(\$_POST['{$matches[1]}'])?>", $text);
+				$text = str_replace($matches[0], "<?=htmlspecialchars(isset(\$_POST['{$matches[1]}']) ? \$_POST['{$matches[1]}'] : '')?>", $text);
 				continue;
 			}
 			if (preg_match("/<\*_get (.+)\*>/uiU", $text, $matches)){
-				$text = str_replace($matches[0], "<?=htmlspecialchars(\$_GET['{$matches[1]}'])?>", $text);
+				$text = str_replace($matches[0], "<?=htmlspecialchars(isset(\$_GET['{$matches[1]}']) ? \$_GET['{$matches[1]}'] : '')?>", $text);
 				continue;
 			}
 			if (preg_match("/<\*_url (.+)\*>/uiU", $text, $matches)){

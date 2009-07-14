@@ -15,8 +15,8 @@ class Users {
 	public function __construct(){
 		$this->config = Config::Load('users', 'users');
 		
-		$this->session = HttpSession::GetSession();
-		$this->cookies = HttpRequest::GetCookies();
+		$this->session = &HttpSession::GetSession();
+		$this->cookies = &HttpRequest::GetCookies();
 		
 		Events::Reserve("core", "AddModule", $this, 'Authorize');
 		Events::Reserve("core", "AddModule", $this, 'Actions');
@@ -26,6 +26,7 @@ class Users {
 	 * Обработка форм
 	 */
 	public function Actions(){
+		if (isset($_POST['users_action']))
 		switch ($_POST['users_action']){
 			case 'enter':
 				if (!isset($this->session['user_id'])) $this->Enter();

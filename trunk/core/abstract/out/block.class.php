@@ -31,13 +31,15 @@ class OutBlock extends AOutContainer {
 	}
 	
 	public function __toString(){
+		if (!isset($this->settings['type'])){
+			return "<div class=\"b-mblock\"><h1>{$this->settings['text']}</h1>{$this->innerHTML}</div>";
+		}
 		if ($this->settings['type'] == 'menu'){
 			return "<div class=\"b-mmenu\">{$this->innerHTML}</div>";
 		}
 		if ($this->settings['type'] == 'array'){
 			return "<div class=\"b-array\">{$this->settings['text']}</div>";
 		}
-		return "<div class=\"b-mblock\"><h1>{$this->settings['text']}</h1>{$this->innerHTML}</div>";
 	}
 	
 }

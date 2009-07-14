@@ -51,10 +51,12 @@ class ACore {
 	}
 
 	public static function GetConst($name){
+		if (!isset(self::$data[$name])) return "";
 		return is_array(self::$data[$name]) ? self::$data[$name][self::$language] : self::$data[$name];
 	}
 
 	public static function GetModuleVar($module, $name){
+		if (!isset(self::GetModule($module)->data[$name])) return "";
 		return is_array(self::GetModule($module)->data[$name]) ? self::GetModule($module)->data[$name][self::$language] : self::GetModule($module)->data[$name];
 	}
 
