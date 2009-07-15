@@ -14,22 +14,22 @@ if (Core::GetModule('users')->user_id != 0){
 	<br><br>
 	<h1>Регистрация:</h1>
 	<div class="b-user-register">
-		<*users register_result*>
 		<form action="" method="POST" module="users" func="register">
 			<input type="hidden" name="users_action" value="register">
+			<b id="register_result"><*users register_result*></b>
 			Mail:<br>
-			<b><*users register_mail_error*></b>
+			<b id="register_mail_error"><*users register_mail_error*></b>
 			<input type="text" name="mail" value="<*_post mail*>"><br>
 			Пароль:<br>
-			<b><*users register_pass_error*></b>
+			<b id="register_pass_error"><*users register_pass_error*></b>
 			<input type="password" name="pass" value="<*_post pass*>"><br>
 			Повторите пароль:<br>
 			<input type="password" name="pass2" value="<*_post pass2*>"><br>
 			Ваше имя:<br>
-			<b><*users register_name_error*></b>
+			<b id="register_name_error"><*users register_name_error*></b>
 			<input type="text" name="name" value="<*_post name*>"><br>
 			Ник:<br>
-			<b><*users register_nick_error*></b>
+			<b id="register_nick_error"><*users register_nick_error*></b>
 			<input type="text" name="nick" value="<*_post nick*>"><br>
 			<input type="submit" value="регистрация">
 			<br>

@@ -76,7 +76,7 @@ class Users {
 	}
 
 	public function ajax_enter(){
-		return array('enter' => $this->Enter(), 'data' => $this->data);
+		return array('result' => $this->Enter(), 'data' => $this->data);
 	}
 	
 	/**
@@ -101,11 +101,11 @@ class Users {
 		
 		$validate = FormValidator::Validate('register', true);
 		if ($validate !== true){
-			$this->data['register_result'] = '';
+			$this->data['register_error'] = '';
 			foreach ($validate as $field => $errors){
 				$this->data['register_' . $field . "_error"] = implode('<br>', $errors);
-				if ($this->data['register_result'] != '') $this->data['register_result'] .= "<br>";
-				$this->data['register_result'] .= $this->data[$field . "_error"]; 
+				if ($this->data['register_error'] != '') $this->data['register_error'] .= "<br>";
+				$this->data['register_error'] .= $this->data['register_' . $field . "_error"]; 
 			}
 			Events::EvalEvent("users", "RegisterFail");
 			return false;
@@ -125,18 +125,18 @@ class Users {
 		$result->execute($vars);
 		
 		if ($result->errorCode() != 0){
-			$this->data['register_result'] = $this->config['register_error'];
+			$this->data['register_result'] = $this->config['register_error'][Core::$language];
 			Events::EvalEvent("users", "RegisterFail");
 			return false;
 		}
 		
-		$this->data['register_result'] = $this->config['register_complite'];
+		$this->data['register_result'] = $this->config['register_complite'][Core::$language];
 		Events::EvalEvent("users", "RegisterComplite");
 		return true;
 	}
 
 	public function ajax_register(){
-		return array('register' => $this->Register(), 'data' => $this->data);
+		return array('result' => $this->Register(), 'data' => $this->data);
 	}
 
 	/**

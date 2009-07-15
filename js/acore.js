@@ -15,6 +15,23 @@ window.addEvent('domready', function(){
 	}
 });
 
+var ACore = new Class({
+	
+	Implements: Events,
+	
+	initialize: function(){
+		
+	},
+
+	Request: function(json, text, form, module, func){
+		this.fireEvent('ajax', [json, text, form, module, func]);
+		this.fireEvent('ajax' + module + func, [json, text, form]);
+	}
+
+});
+
+acore = new ACore();
+
 IFrames = 0;
 
 var Submit = new Class({
@@ -52,12 +69,20 @@ var Submit = new Class({
 		if (!json){
 			alert(doc.body.innerHTML);
 		} else {
-			JsonRequest(json, doc.body.innerHTML, this.form, this.module, this.func);
+			acore.Request(json, doc.body.innerHTML, this.form, this.module, this.func);
 		}
 		setTimeout(function(){this.frame.destroy()}.bind(this), 1000);
 	}
 });
 
-function JsonRequest(json, text, form, module, func){
-	alert(text);
-}
+acore.addEvent('ajaxusersregister', function(json, text){
+	$('register_result').innerHTML = json.data['register_result'] != null ? json.data['register_result'] : '';
+	if (json.result == false){
+		$('register_mail_error').innerHTML = json.data['register_mail_error'] != null ? json.data['register_mail_error'] : '';
+		$('register_pass_error').innerHTML = json.data['register_pass_error'] != null ? json.data['register_pass_error'] : '';
+		$('register_name_error').innerHTML = json.data['register_name_error'] != null ? json.data['register_name_error'] : '';
+		$('register_nick_error').innerHTML = json.data['register_nick_error'] != null ? json.data['register_nick_error'] : '';
+	} else {
+		window.location = ROOT + "/enter/";
+	}
+});
